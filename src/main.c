@@ -17,8 +17,6 @@
 void showMenuScreen(void) {
   ChoisirEcran(1);
   EffacerEcran(CouleurParNom("black"));
-
-  /*test*/
   
 }
 
