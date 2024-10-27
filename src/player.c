@@ -21,10 +21,10 @@ struct player {
 };
 
 /*
-  Return :
-   false, if the box is condemned
-   true, if the box is free
-   -1, if the move is not correct
+  Renvoie :
+   false, si la case est condamnée
+   true, si la case est libre 
+   -1, si le mouvement passé en argument n'est pas correct
 */
 bool movePlayer(struct player p, move m) {
   switch(m) {

@@ -1,2 +1,2 @@
-gcc -ansi -pedantic -o exe src/main.c -lgraph;
-./exe;
+gcc -ansi -pedantic src/main.c -lgraph;
+./a.out;

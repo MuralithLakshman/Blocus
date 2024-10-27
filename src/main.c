@@ -14,13 +14,23 @@
 #define MAX_WIDTH 1270
 #define MAX_HEIGHT 740
 
-void drawGrid(void) {
-  int x, y = 10;
-  int i; 
+void showMenuScreen(void) {
+  ChoisirEcran(1);
+  EffacerEcran(CouleurParNom("black"));
+
   
-  ChoisirEcran(2);
 }
+
+void drawGrid(int x, int y, int size) {
+  int i;
+
+  ChoisirCouleurDessin(CouleurParNom("red"));
+  DessinerRectangle(x, y, size * 10, size * 10);
+
+  for(i = 0; i < size; i++) {
     
+  }
+}
   
 
 int main(void) {
@@ -40,14 +50,10 @@ int main(void) {
     }
     
     if(Microsecondes() > next) {
-
-      ChoisirCouleurDessin(CouleurParNom("white"));
-      ChoisirEcran(1);
-      /*EffacerEcran(CouleurParNom("dark"));*/
-      ChoisirCouleurDessin(CouleurParNom("green"));
-      EcrireTexte(screenX + 10, screenY + 10, "ACCEUIL", 2);
-      CopierZone(1, 0, screenX, screenY, WIDTH, HEIGHT, screenX, screenY); 
       next = Microsecondes() + MICRO;
+
+      DessinerSegment(0, 50, 10, 50);
+      
     }
   }
 	      
