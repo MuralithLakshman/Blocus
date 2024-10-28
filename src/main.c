@@ -12,41 +12,20 @@
 #define HEIGHT 600 /* Hauteur */
 /* Valeurs approximatives que nous avons trouvé en faisant des tests */ 
 #define MAX_WIDTH 1270
-#define MAX_HEIGHT 740
-
-void showMenuScreen(void) {
-  ChoisirEcran(1);
-  EffacerEcran(CouleurParNom("black"));
-  
-}
-
-void drawGrid(int x, int y, int size) {
-  int i;
-  int gridW = WIDTH - 2 * x;
-  int gridH = HEIGHT - 2 * y;
-  int multiplierX = gridW / size;
-  int multiplierY = gridH / size;
-  printf("%d, %d, %d, %d", multiplierX, multiplierY, gridW, gridH);
-
-  ChoisirEcran(0);
-  DessinerRectangle(x, y, gridW, gridH);
-
-  for(i = y + multiplierY; i < y + gridH; i += multiplierY) {
-    DessinerSegment(x, i, x + gridW, i);
-  }
-}
-  
+#define MAX_HEIGHT 740  
 
 int main(void) {
   int next;
   int screenX = (MAX_WIDTH - WIDTH) / 2;
   int screenY = (MAX_HEIGHT - HEIGHT) / 2;
+  int gridX = ((WIDTH / 2) / 2) / 2;
+  int gridY = ((HEIGHT / 2) / 2) / 2;
   
   InitialiserGraphique();
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  drawGrid((WIDTH / 2) / 2, (HEIGHT / 2) / 2, 4);
+  /*grid = NewGrid(gridX, gridY, WIDTH - 2 * gridX, HEIGHT - 2 * gridY, 6);*/
 
   next = Microsecondes() + MICRO; 
   while(true) {
