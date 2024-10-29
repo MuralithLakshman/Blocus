@@ -10,8 +10,8 @@ struct grid {
   int** data;
 };
 
-struct grid NewGrid(int originX, int originY, int width, int height, int size);
+grid NewGrid(int originX, int originY, int width, int height, int size);
 
-void drawgrid(struct grid g);
+void drawgrid(grid g);
 
 #endif GRID_H

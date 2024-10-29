@@ -9,31 +9,33 @@ struct grid {
   int height; 
   int size;
   int** data;
+  int*** boxes; 
 };
 
 /* Initialise une nouvelle grille vide */ 
-struct grid NewGrid(int originX, int originY, int width, int height, int size) {
-  int i, j;
+grid NewGrid(int originX, int originY, int width, int height, int size) {
+  int i, j, k;
 
   /*
     Utilisation de la fonction calloc() pour que tous les bits soient à 0.
     Signifie que toutes les cases sont vides.
   */
-  int** array = (int**)calloc(size, sizeof(int*));
+  int** data = (int**)calloc(size, sizeof(int*));
+  int*** boxes = (int***)malloc(size * sizeof(int**));
 
   for(i = 0; i < size; i++) {
     for(j = 0; j < size; j++) {
-      array[i] = (int*)calloc(size, sizeof(int));
+      data[i] = (int*)calloc(size, sizeof(int));
     }
   }
 
   for(i = 0; i < size; i++) {
     for(j = 0; j < size; j++) {
-      free(array[i]); 
+      free(data[i]); 
     }
   }
 
-  free(array);
+  free(data);
 
   /*
     Pour être le plus précis possible lors de l'affichage de la grille,
@@ -51,7 +53,7 @@ struct grid NewGrid(int originX, int originY, int width, int height, int size) {
 }
 
 /* Dessine une grille sur le graphique */ 
-void drawGrid(struct grid g) {
+void drawGrid(grid g) {
   int i;
   int x = g.originX;
   int y = g.originY;
