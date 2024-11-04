@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <graph.h>
 
-struct grid {
+struct Grid {
   int originX;
   int originY;
   int width;
@@ -12,30 +12,36 @@ struct grid {
   int*** boxes; 
 };
 
+typedef struct  Grid Grid; 
+
 /* Initialise une nouvelle grille vide */ 
-grid NewGrid(int originX, int originY, int width, int height, int size) {
-  int i, j, k;
+Grid NewGrid(int originX, int originY, int width, int height, int size) {
+  int i, j;
+  Grid g; 
 
   /*
     Utilisation de la fonction calloc() pour que tous les bits soient à 0.
     Signifie que toutes les cases sont vides.
   */
   int** data = (int**)calloc(size, sizeof(int*));
+
+  /*
+    [
+      [ [x, y], [x', y'] ... ],
+      [ [...], ...],
+      ...
+    ]
+   */ 
   int*** boxes = (int***)malloc(size * sizeof(int**));
 
   for(i = 0; i < size; i++) {
+    data[i] = (int*)calloc(size, sizeof(int));
+    boxes[i] = (int**)malloc(size * sizeof(int*));
+    
     for(j = 0; j < size; j++) {
-      data[i] = (int*)calloc(size, sizeof(int));
+      boxes[i][j] = (int*)malloc(2 * sizeof(int));
     }
   }
-
-  for(i = 0; i < size; i++) {
-    for(j = 0; j < size; j++) {
-      free(data[i]); 
-    }
-  }
-
-  free(data);
 
   /*
     Pour être le plus précis possible lors de l'affichage de la grille,
@@ -49,16 +55,36 @@ grid NewGrid(int originX, int originY, int width, int height, int size) {
     height++;
   }
 
-  return struct grid g = {originX, originY, width, height, size, array};		        
+  g.originX = originX;
+  g.originY = originY;
+  g.width = width;
+  g.height = height;
+  g.size = size;
+  g.data = data;
+  g.boxes = boxes;
+
+  for(i = 0; i < size; i++) {
+    free(data[i]);
+    free(boxes[i]);
+
+    for(j = 0; j < size; j++) {
+      free(boxes[i][j]);
+    }
+  }
+
+  free(data);
+  free(boxes);
+
+  return g;		        
 }
 
 /* Dessine une grille sur le graphique */ 
-void drawGrid(grid g) {
+void drawGrid(Grid g) {
   int i;
   int x = g.originX;
   int y = g.originY;
   int width = g.width;
-  int heignt = g.height;
+  int height = g.height;
   int boxX = g.width / g.size;
   int boxY = g.height / g.size;
 
