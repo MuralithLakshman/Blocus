@@ -3,19 +3,38 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 SRC = src/
-FILES = $(SRC)main.c $(SRC)player.c $(SRC)grid.c
+OFILES = $(SRC)main.o $(SRC)player.o $(SRC)grid.o
+LIBS = -lgraph -lm
 EXE = exe
 
-### DEPENDANCES ###
+### DEFAULT GOAL ###
 
-exe : $(OFILES)
-	$(CC) $(CFLAGS) $(EXE) -o $(FILES)
+goal : ${EXE}
 
-### CLEAN ###
+### ESSENTIAL RULES ### 
+
+${EXE} : $(OFILES)
+	$(CC) $(CFLAGS) -o $(EXE) $(OFILES) $(LIBS)
+
+main.o : main.c grid.h player.h
+	$(CC) $(CFLAGS) -c main.c $(LIBS) 
+
+grid.o : grid.c grid.h
+	$(CC) $(CFLAGS) -c grid.c $(LIBS) 
+
+player.o : player.c player.h
+	$(CC) $(CFLAGS) -c player.c $(LIBS) 
+
+### OPTIONAL RULES ###
+
+run : goal
+	./${EXE}
 
 clean :
 	rm -f $(SRC)/*.o
 
-### FACTICE ### 
+mrproper : clean goal 
 
-.PHONY : clean 
+### FACTIC GOAL ### 
+
+.PHONY : goal clean mrproper 
