@@ -20,13 +20,15 @@ struct player {
   int points;
 };
 
+typedef struct player Player; 
+
 /*
   Renvoie :
    false, si la case est condamnée
    true, si la case est libre 
    -1, si le mouvement passé en argument n'est pas correct
 */
-bool movePlayer(struct player p, move m) {
+bool movePlayer(struct Player p, move m) {
   switch(m) {
     case LEFT:
       break;

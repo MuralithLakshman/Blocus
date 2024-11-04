@@ -1,7 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "graph.h"
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #define LEFT 0
 #define RIGHT 1
@@ -23,3 +21,5 @@ typedef int move;
 typedef struct player Player;
 
 bool movePlayer(Player p, move m); 
+
+#endif PLAYER_H

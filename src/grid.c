@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <graph.h>
 
-struct Grid {
+struct grid {
   int originX;
   int originY;
   int width;
@@ -12,7 +12,7 @@ struct Grid {
   int*** boxes; 
 };
 
-typedef struct  Grid Grid; 
+typedef struct grid Grid; 
 
 /* Initialise une nouvelle grille vide */ 
 Grid NewGrid(int originX, int originY, int width, int height, int size) {

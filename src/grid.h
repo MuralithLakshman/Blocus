@@ -1,7 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
-struct Grid {
+struct grid {
   int originX;
   int originY;
   int width;
@@ -10,7 +10,7 @@ struct Grid {
   int** data;
 };
 
-typedef struct Grid Grid; 
+typedef struct grid Grid; 
 
 Grid NewGrid(int originX, int originY, int width, int height, int size);
 
