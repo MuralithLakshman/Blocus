@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <graph.h>
 #include <stdbool.h>
-
-#define move int
+#include "graph.h"
 
 #define LEFT 0
 #define RIGHT 1
@@ -12,10 +10,12 @@
 #define UP_LEFT 4
 #define UP_RIGHT 5
 #define DOWN_LEFT 6
-#define DOWN_RIGHT 7 
+#define DOWN_RIGHT 7
+
+typedef int move; 
 
 struct player {
-  char* username; 
+  int id; 
   bool bot;
   int points;
 };
@@ -52,5 +52,7 @@ bool movePlayer(struct player p, move m) {
     case DOWN_RIGHT:
       break;
   }
+
+  return true;
 }
   
