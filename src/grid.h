@@ -8,6 +8,7 @@ struct grid {
   int height; 
   int size;
   int** data;
+  int*** boxes; 
 };
 
 typedef struct grid Grid; 
