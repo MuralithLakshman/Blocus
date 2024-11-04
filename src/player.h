@@ -22,4 +22,4 @@ typedef struct player Player;
 
 bool movePlayer(Player p, move m); 
 
-#endif PLAYER_H
+#endif /* PLAYER_H */ 

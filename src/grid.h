@@ -16,4 +16,4 @@ Grid NewGrid(int originX, int originY, int width, int height, int size);
 
 void drawgrid(Grid g);
 
-#endif GRID_H
+#endif /* GRID_H */ 

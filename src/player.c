@@ -28,7 +28,7 @@ typedef struct player Player;
    true, si la case est libre 
    -1, si le mouvement passé en argument n'est pas correct
 */
-bool movePlayer(struct Player p, move m) {
+bool movePlayer(Player p, move m) {
   switch(m) {
     case LEFT:
       break;
