@@ -1,7 +1,7 @@
 ### VARIABLES ###
 
 CC = gcc
-CFLAGS = -Wall -ansi -pedantic
+CFLAGS = -Wall -ansi -pedantic -g
 SRC = src/
 OFILES = $(SRC)main.o $(SRC)player.o $(SRC)grid.o
 LIBS = -lgraph -lm
