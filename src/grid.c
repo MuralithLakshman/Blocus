@@ -6,8 +6,9 @@ struct grid {
   int originX;
   int originY;
   int width;
-  int height; 
+  int height;
   int size;
+  int screen;
   int** data;
   int*** boxes; 
 };
@@ -15,9 +16,9 @@ struct grid {
 typedef struct grid Grid; 
 
 /* Initialise une nouvelle grille vide */ 
-Grid NewGrid(int originX, int originY, int width, int height, int size) {
+Grid NewGrid(int originX, int originY, int width, int height, int size, int screen) {
   int i, j;
-  Grid g; 
+  Grid g;
 
   /*
     Utilisation de la fonction calloc() pour que tous les bits soient à 0.
@@ -60,16 +61,17 @@ Grid NewGrid(int originX, int originY, int width, int height, int size) {
   g.width = width;
   g.height = height;
   g.size = size;
+  g.screen = screen;
   g.data = data;
   g.boxes = boxes;
 
   for(i = 0; i < size; i++) {
-    free(data[i]);
-    free(boxes[i]);
-
     for(j = 0; j < size; j++) {
       free(boxes[i][j]);
     }
+
+    free(data[i]);
+    free(boxes[i]);
   }
 
   free(data);
@@ -101,4 +103,6 @@ void drawGrid(Grid g) {
     DessinerSegment(i, y, i, y + height); 
   }
 }
+
+
 

@@ -7,14 +7,15 @@ struct grid {
   int width;
   int height; 
   int size;
+  int screen;
   int** data;
   int*** boxes; 
 };
 
 typedef struct grid Grid; 
 
-Grid NewGrid(int originX, int originY, int width, int height, int size);
+Grid NewGrid(int originX, int originY, int width, int height, int size, int screen);
 
-void drawgrid(Grid g);
+void drawGrid(Grid g);
 
 #endif /* GRID_H */ 
