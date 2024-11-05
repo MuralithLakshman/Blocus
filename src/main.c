@@ -16,7 +16,18 @@
 
 /* Valeurs approximatives que nous avons trouvé en faisant des tests */ 
 #define MAX_WIDTH 1270
-#define MAX_HEIGHT 740  
+#define MAX_HEIGHT 740
+
+/* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
+int showScreen(int screen) {
+  if(screen <= 0 || screen > 10) return 0;
+  
+  ChoisirEcran(0);
+  EffacerEcran(CouleurParNom("white"));
+  CopierZone(screen, 0, 0, 0, WIDTH, HEIGHT, 0, 0);
+
+  return screen;
+}
 
 int main(void) {
   Grid g;
@@ -31,6 +42,8 @@ int main(void) {
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
   g = NewGrid(gridX, gridY, WIDTH - 2 * gridX, HEIGHT - 2 * gridY, 6);
+  drawGrid(g);
+  showScreen(2);
 
   printf("%d", g.originX);
 
