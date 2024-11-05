@@ -4,8 +4,7 @@
 struct grid {
   int originX;
   int originY;
-  int width;
-  int height; 
+  int side;
   int size;
   int screen;
   int** data;
@@ -14,7 +13,7 @@ struct grid {
 
 typedef struct grid Grid; 
 
-Grid NewGrid(int originX, int originY, int width, int height, int size, int screen);
+Grid NewGrid(int originX, int originY, int side, int size, int screen);
 
 void drawGrid(Grid g);
 

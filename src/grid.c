@@ -5,8 +5,7 @@
 struct grid {
   int originX;
   int originY;
-  int width;
-  int height;
+  int side;
   int size;
   int screen;
   int** data;
@@ -16,7 +15,7 @@ struct grid {
 typedef struct grid Grid; 
 
 /* Initialise une nouvelle grille vide */ 
-Grid NewGrid(int originX, int originY, int width, int height, int size, int screen) {
+Grid NewGrid(int originX, int originY, int side, int size, int screen) {
   int i, j;
   Grid g;
 
@@ -46,20 +45,15 @@ Grid NewGrid(int originX, int originY, int width, int height, int size, int scre
 
   /*
     Pour être le plus précis possible lors de l'affichage de la grille,
-    on cherche à avoir une largeur et une hauteur divisible par sa taille.
+    on cherche à avoir le côté de la grille divisible par le nombre de case.
   */
-  while(width % size != 0) {
-    width++;
-  }
-
-  while(height % size != 0) {
-    height++;
+  while(side % size != 0) {
+    side++;
   }
 
   g.originX = originX;
   g.originY = originY;
-  g.width = width;
-  g.height = height;
+  g.side = side;
   g.size = size;
   g.screen = screen;
   g.data = data;
@@ -85,22 +79,20 @@ void drawGrid(Grid g) {
   int i;
   int x = g.originX;
   int y = g.originY;
-  int width = g.width;
-  int height = g.height;
-  int boxX = g.width / g.size;
-  int boxY = g.height / g.size;
+  int side = g.side; 
+  int box = side / g.size;
 
   ChoisirEcran(2);
   EffacerEcran(CouleurParNom("white"));
   
-  DessinerRectangle(x, y, width, height);
+  DessinerRectangle(x, y, side, side);
 
-  for(i = y + boxY; i < y + height; i += boxY) {
-    DessinerSegment(x, i, x + width, i);
+  for(i = y + box; i < y + side; i += box) {
+    DessinerSegment(x, i, x + side, i);
   }
 
-  for(i = x + boxX; i < x + width; i += boxX) {
-    DessinerSegment(i, y, i, y + height); 
+  for(i = x + box; i < x + side; i += box) {
+    DessinerSegment(i, y, i, y + side); 
   }
 }
 

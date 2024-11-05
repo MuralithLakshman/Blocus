@@ -14,7 +14,7 @@
 #define WIDTH 900 /* Largeur */ 
 #define HEIGHT 600 /* Hauteur */
 
-/* Valeurs approximatives que nous avons trouvé en faisant des tests */ 
+/* Mettre les dimensions de son écran */ 
 #define MAX_WIDTH 1270
 #define MAX_HEIGHT 740
 
@@ -41,9 +41,9 @@ int main(void) {
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  g = NewGrid(gridX, gridY, WIDTH - 2 * gridX, HEIGHT - 2 * gridY, 6);
+  g = NewGrid(gridX + gridY, gridY, HEIGHT - 2 * gridY, 3, 2);
   drawGrid(g);
-  showScreen(2);
+  showScreen(g.screen);
 
   printf("%d", g.originX);
 
