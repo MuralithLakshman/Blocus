@@ -7,14 +7,14 @@
 #include "grid.h"
 #include "player.h"
 
-/* Valeur d'une micro secondes */
+/* Fréquence de rafraichissement en milisecondes */
 #define MICRO 1000000L 
 
 /* Taille de la fenêtre */ 
 #define WIDTH 900 /* Largeur */ 
 #define HEIGHT 600 /* Hauteur */
 
-/* Mettre les dimensions de son écran */ 
+/* Dimensions de son écran */ 
 #define MAX_WIDTH 1270
 #define MAX_HEIGHT 740
 
@@ -34,18 +34,17 @@ int main(void) {
   int next;
   int screenX = (MAX_WIDTH - WIDTH) / 2;
   int screenY = (MAX_HEIGHT - HEIGHT) / 2;
-  int gridX = ((WIDTH / 2) / 2) / 2;
   int gridY = ((HEIGHT / 2) / 2) / 2;
+  int side = HEIGHT - 2 * gridY;
+  int gridX = (WIDTH - side) / 2;
   
   InitialiserGraphique();
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  g = NewGrid(gridX + gridY, gridY, HEIGHT - 2 * gridY, 3, 2);
+  g = NewGrid(gridX, gridY, side, 3, 2);
   drawGrid(g);
   showScreen(g.screen);
-
-  printf("%d", g.originX);
 
   next = Microsecondes() + MICRO; 
   while(true) {
