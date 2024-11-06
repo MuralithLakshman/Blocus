@@ -18,6 +18,20 @@
 #define MAX_WIDTH 1270
 #define MAX_HEIGHT 740
 
+struct button {
+  int x;
+  int y;
+  int width;
+  int height;
+};
+
+typedef struct button Button;
+
+bool isPressed(int x, int y, Button b) {
+  return x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
+}
+  
+
 /* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
 int showScreen(int screen) {
   if(screen <= 0 || screen > 10) return 0;
@@ -31,6 +45,7 @@ int showScreen(int screen) {
 
 int main(void) {
   Grid g;
+  int sprite; 
   int next;
   int screenX = (MAX_WIDTH - WIDTH) / 2;
   int screenY = (MAX_HEIGHT - HEIGHT) / 2;
@@ -44,7 +59,12 @@ int main(void) {
 
   g = NewGrid(gridX, gridY, side, 3, 2);
   drawGrid(g);
-  showScreen(g.screen);
+  /*showScreen(g.screen);*/
+
+  ChoisirEcran(0);
+  sprite = ChargerSprite("assets/blue-cross.png");
+  AfficherSprite(sprite, gridX, gridY);
+  printf("%d", sprite);
 
   next = Microsecondes() + MICRO; 
   while(true) {
@@ -60,6 +80,7 @@ int main(void) {
   }
 	      
 
+  LibererSprite(sprite);
   FermerGraphique();
   
   return EXIT_SUCCESS;
