@@ -6,16 +6,16 @@
 #include "grid.h"
 #include "player.h"
 
-/* Fréquence de rafraichissement en milisecondes */
+/* Fréquence de rafraichissement en microsecondes */
 #define MICRO 1000000L
 
 /* Taille de la fenêtre */ 
 #define WIDTH 900 /* Largeur */ 
 #define HEIGHT 600 /* Hauteur */
 
-/* Dimensions de l'écran */ 
-#define MAX_WIDTH 1270
-#define MAX_HEIGHT 740
+/* Taille de l'écran */ 
+#define MAX_WIDTH 1270 /* Largeur */
+#define MAX_HEIGHT 740 /* Hauteur */
 
 struct button {
   int x;
