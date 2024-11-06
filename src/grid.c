@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <graph.h>
 
+#include "player.h"
+
 struct grid {
   int originX;
   int originY;
@@ -94,6 +96,30 @@ void drawGrid(Grid g) {
   for(i = x + box; i < x + side; i += box) {
     DessinerSegment(i, y, i, y + side); 
   }
+}
+
+/* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
+/* Si le joueur n'est pas dans la grille, un tableau vide est renvoyé. */ 
+int* getPlayerPosition(Player p, Grid g) {
+  int i, j;
+  int* coordinates = malloc(2 * sizeof(int));
+
+  if(coordinates == NULL) return NULL;
+
+  for(i = 0; i < g.side; i++) {
+    for(j = 0; j < g.side; j++) {
+      if(g.data[i][j] == p.id) {
+	coordinates[0] = i;
+	coordinates[1] = j;
+
+	return coordinates;
+      }
+    }
+  }
+
+  free(coordinates);
+
+  return NULL; 
 }
 
 

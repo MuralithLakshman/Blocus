@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "graph.h"
+#include <graph.h>
+
+#include "grid.h"
 
 #define LEFT 0
 #define RIGHT 1
@@ -16,7 +18,7 @@ typedef int move;
 
 struct player {
   int id; 
-  bool bot;
+  unsigned int  bot; /* booleen */ 
   int points;
 };
 
@@ -28,7 +30,8 @@ typedef struct player Player;
    true, si la case est libre 
    -1, si le mouvement passé en argument n'est pas correct
 */
-bool movePlayer(Player p, move m) {
+unsigned int movePlayer(Player p, move m, Grid g) {
+  
   switch(m) {
     case LEFT:
       break;
@@ -55,6 +58,6 @@ bool movePlayer(Player p, move m) {
       break;
   }
 
-  return true;
+  return 1;
 }
   

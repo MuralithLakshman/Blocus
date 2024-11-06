@@ -12,7 +12,7 @@
 
 struct player {
   int id;
-  bool bot;
+  unsigned int bot;
   int points;
 }; 
   
@@ -20,6 +20,6 @@ typedef int move;
 
 typedef struct player Player;
 
-bool movePlayer(Player p, move m); 
+unsigned int movePlayer(Player p, move m); 
 
 #endif /* PLAYER_H */ 

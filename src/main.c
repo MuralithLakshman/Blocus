@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <graph.h>
 #include <stdbool.h>
+#include <graph.h>
 
 #include "/usr/include/X11/keysymdef.h"
 #include "grid.h"
 #include "player.h"
 
 /* Fréquence de rafraichissement en milisecondes */
-#define MICRO 1000000L 
+#define MICRO 1000000L
 
 /* Taille de la fenêtre */ 
 #define WIDTH 900 /* Largeur */ 
@@ -35,7 +35,7 @@ bool isPressed(Button b) {
   
 
 /* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
-int showScreen(int screen) {
+unsigned int showScreen(int screen) {
   if(screen <= 0 || screen > 10) return 0;
   
   ChoisirEcran(0);
