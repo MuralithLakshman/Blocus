@@ -27,8 +27,10 @@ struct button {
 
 typedef struct button Button;
 
-bool isPressed(int x, int y, Button b) {
-  return x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
+bool isPressed(Button b) {
+  if(SourisCliquee()) return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
+
+  return false; 
 }
   
 
@@ -45,8 +47,7 @@ int showScreen(int screen) {
 
 int main(void) {
   Grid g;
-  int sprite; 
-  int next;
+  unsigned long next;
   int screenX = (MAX_WIDTH - WIDTH) / 2;
   int screenY = (MAX_HEIGHT - HEIGHT) / 2;
   int gridY = ((HEIGHT / 2) / 2) / 2;
@@ -54,19 +55,16 @@ int main(void) {
   int gridX = (WIDTH - side) / 2;
   
   InitialiserGraphique();
+  
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
   g = NewGrid(gridX, gridY, side, 3, 2);
   drawGrid(g);
-  /*showScreen(g.screen);*/
+  showScreen(g.screen);
 
-  ChoisirEcran(0);
-  sprite = ChargerSprite("assets/blue-cross.png");
-  AfficherSprite(sprite, gridX, gridY);
-  printf("%d", sprite);
-
-  next = Microsecondes() + MICRO; 
+  next = Microsecondes() + MICRO;
+  
   while(true) {
     /* SI la touche escape est pressée, cela arrête le programme. */ 
     if(ToucheEnAttente() == 1) {
@@ -75,12 +73,9 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
-      
     }
   }
 	      
-
-  LibererSprite(sprite);
   FermerGraphique();
   
   return EXIT_SUCCESS;
