@@ -6,9 +6,9 @@
 
 <br>
 
-Pour modifier la fréquence rafraichissement, vous pouvez modifier la valeur de la constante `MICRO`.
-Initialement, cette constante est égale à 1 secondes, cela veut dire que l'interface graphique sera raffraichie une fois par secondes.  
-<u>La valeur doit être en milisecondes !</u>
+Pour modifier la fréquence de rafraichissement, vous pouvez modifier la valeur de la constante `MICRO`.
+Initialement, cette constante est égale à 1 secondes, cela veut dire que l'interface graphique sera raffraichie une fois par seconde.  
+<u>La valeur doit être en microsecondes !</u>
 ```c 
 /* Fréquence de rafraichissement */ 
 #define MICRO 1000000L
