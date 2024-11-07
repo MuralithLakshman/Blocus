@@ -26,10 +26,10 @@ struct button {
 
 typedef struct button Button;
 
-bool isPressed(Button b) {
+unsigned int isPressed(Button b) {
   if(SourisCliquee()) return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
 
-  return false; 
+  return 0; 
 }
   
 
@@ -73,7 +73,7 @@ int main(void) {
 
   next = Microsecondes() + MICRO;
   
-  while(true) {
+  while(1) {
     /* SI la touche escape est pressée, cela arrête le programme. */ 
     if(ToucheEnAttente() == 1) {
       if(Touche() == XK_Escape) break;
