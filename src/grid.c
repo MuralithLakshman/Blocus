@@ -99,7 +99,7 @@ void drawGrid(Grid g) {
 }
 
 /* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
-/* Si le joueur n'est pas dans la grille, un tableau vide est renvoyé. */ 
+/* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
 int* getPlayerPosition(Player p, Grid g) {
   int i, j;
   int* coordinates = malloc(2 * sizeof(int));

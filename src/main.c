@@ -9,13 +9,13 @@
 /* Fréquence de rafraichissement en milisecondes */
 #define MICRO 1000000L
 
-/* Taille de la fenêtre */ 
+/* Taille de la fenêtre graphique */ 
 #define WIDTH 900 /* Largeur */ 
-#define HEIGHT 600 /* Hauteur */
+#define HEIGHT 700 /* Hauteur */
 
 /* Dimensions de l'écran */ 
-#define MAX_WIDTH 1270
-#define MAX_HEIGHT 740
+#define MAX_WIDTH 1920
+#define MAX_HEIGHT 1080
 
 struct button {
   int x;
@@ -26,10 +26,10 @@ struct button {
 
 typedef struct button Button;
 
-bool isPressed(Button b) {
+unsigned int isPressed(Button b) {
   if(SourisCliquee()) return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
 
-  return false; 
+  return 0; 
 }
   
 
@@ -56,8 +56,8 @@ int main(void) {
   int gridY = (HEIGHT - side) / 2;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
-  if(WIDTH + 100 < side || HEIGHT + 100 < side) {
-    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.");
+  if(WIDTH <= (side + 100) || HEIGHT <= (side + 100)) {
+    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.\n");
     return EXIT_FAILURE;
   }
   
@@ -68,12 +68,11 @@ int main(void) {
 
   g = NewGrid(gridX, gridY, side, 9, 2);
   drawGrid(g);
-  printf("%d", g.side);
   showScreen(g.screen);
 
   next = Microsecondes() + MICRO;
   
-  while(true) {
+  while(1) {
     /* SI la touche escape est pressée, cela arrête le programme. */ 
     if(ToucheEnAttente() == 1) {
       if(Touche() == XK_Escape) break;
