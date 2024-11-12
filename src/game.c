@@ -42,3 +42,5 @@ Game NewGame(int number_players, Grid grid) {
 Player getPlayerTurn(Game game) {
   return game.turn == game.player1.id ? game.player1 : game.player2;
 }
+
+

@@ -78,11 +78,12 @@ Grid NewGrid(int originX, int originY, int side, int size, int screen) {
 
 /* Dessine une grille sur le graphique */ 
 void drawGrid(Grid g) {
-  int i;
+  int i, j;
   int x = g.originX;
   int y = g.originY;
   int side = g.side; 
   int box = side / g.size;
+  int sprite;
 
   ChoisirEcran(2);
   EffacerEcran(CouleurParNom("white"));
@@ -95,6 +96,22 @@ void drawGrid(Grid g) {
 
   for(i = x + box; i < x + side; i += box) {
     DessinerSegment(i, y, i, y + side); 
+  }
+
+  
+  for(i = x; i < x + side; i += box) {
+    for(j = y; j < y + side; j += box) {
+      sprite = ChargerSprite("assets/orange-cross-6.png");
+
+      if(sprite == -1) {
+	printf("Erreur lors d'un chargement du sprite.\n");
+	FermerGraphique();
+	return;
+      }
+
+      AfficherSprite(sprite, i + 10, j + 10);
+      LibererSprite(sprite);
+    }
   }
 }
 
