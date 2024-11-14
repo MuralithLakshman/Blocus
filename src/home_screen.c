@@ -19,28 +19,19 @@ struct button {
 
 typedef struct button Button;
 
-
-unsigned int isPressed(Button b) {
-  if (SourisCliquee()) {
-    return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
-  }
-  return 0; 
+unsigned int isPressed(Button b, int x, int y) {
+  return x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
 }
-
 
 void printText(int x, int y, int size, char* color, char* text) {
   ChoisirCouleurDessin(CouleurParNom(color));
   EcrireTexte(x, y, text, size);
 }
 
-
 void dessinerBouton(Button b, char* color) {
-
   ChoisirCouleurDessin(CouleurParNom(color));
   DessinerRectangle(b.x, b.y, b.width, b.height);
 }
-
-
 
 unsigned int showScreen(int screen) {
   if(screen <= 0 || screen > 10) return 0;
@@ -53,17 +44,14 @@ unsigned int showScreen(int screen) {
 }
 
 int main(void) {
-
   Button b_montrer, b_descendre;
   unsigned long next;
   int tailleGrille = 3; 
   char texte[20];
 
- 
   InitialiserGraphique();
   CreerFenetre(100, 100, 900, 600);
 
-  
   b_montrer.x = 600; 
   b_montrer.y = 300; 
   b_montrer.width = 30;
@@ -77,43 +65,39 @@ int main(void) {
   next = Microsecondes() + MICRO;
 
   while (1) {
-  
     if (Microsecondes() > next) {
       next = Microsecondes() + MICRO;
 
-   
       EffacerEcran(CouleurParNom("white"));  
 
-   
       dessinerBouton(b_montrer, "blue");
       dessinerBouton(b_descendre, "red");
 
-   
-      sprintf(texte,"Taille %dx%d",tailleGrille,tailleGrille);
+      sprintf(texte, "Taille %dx%d", tailleGrille, tailleGrille);
       printText(50, 100, 2, "black", texte);
 
-      
-      if (isPressed(b_montrer)) {
-        if (tailleGrille < 9) {
-          tailleGrille++; 
+      if (SourisCliquee()) {
+        int x = _X, y = _Y; 
+
+        if (isPressed(b_montrer, x, y)) {
+          if (tailleGrille < 9) {
+            tailleGrille++; 
+          }
         }
-      }
-      if (isPressed(b_descendre)) {
-        if (tailleGrille > 3) {
-          tailleGrille--;  
+
+        if (isPressed(b_descendre, x, y)) {
+          if (tailleGrille > 3) {
+            tailleGrille--;  
+          }
         }
       }
     }
 
-   
     if (ToucheEnAttente() == 1) {
-      if (Touche() == XK_Escape) break; 
+      if (Touche() == XK_Escape) break;
     }
   }
-  
- 
 
-  
   FermerGraphique();
   return 0;
 }
