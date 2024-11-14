@@ -3,19 +3,21 @@
 #include <graph.h>
 
 #include "/usr/include/X11/keysymdef.h"
+
 #include "grid.h"
 #include "player.h"
+#include "game.h"
 
-/* Fréquence de rafraichissement en microsecondes */
+/* Fréquence de rafraichissement en milisecondes */
 #define MICRO 1000000L
 
-/* Taille de la fenêtre */ 
+/* Taille de la fenêtre graphique */ 
 #define WIDTH 900 /* Largeur */ 
-#define HEIGHT 600 /* Hauteur */
+#define HEIGHT 700 /* Hauteur */
 
-/* Taille de l'écran */ 
-#define MAX_WIDTH 1270 /* Largeur */
-#define MAX_HEIGHT 740 /* Hauteur */
+/* Dimensions de l'écran */ 
+#define MAX_WIDTH 1920
+#define MAX_HEIGHT 1080
 
 struct button {
   int x;
@@ -45,7 +47,8 @@ unsigned int showScreen(int screen) {
 }
 
 int main(void) {
-  Grid g;
+  Grid grid;
+  Game game; 
   unsigned long next;
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
@@ -56,8 +59,8 @@ int main(void) {
   int gridY = (HEIGHT - side) / 2;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
-  if(WIDTH + 100 < side || HEIGHT + 100 < side) {
-    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.");
+  if(WIDTH <= (side + 100) || HEIGHT <= (side + 100)) {
+    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.\n");
     return EXIT_FAILURE;
   }
   
@@ -66,10 +69,10 @@ int main(void) {
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  g = NewGrid(gridX, gridY, side, 9, 2);
-  drawGrid(g);
-  printf("%d", g.side);
-  showScreen(g.screen);
+  /* Initialisation d'une nouvelle grille */ 
+
+  game = NewGame(2, NewGrid(gridX, gridY, side, 6, 2));
+  drawGrid(game.grid);
 
   next = Microsecondes() + MICRO;
   
@@ -81,9 +84,16 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
+
+      if(game.started) {
+	player = getPlayerTurn(game);
+
+	
+	 
+      }
     }
   }
-	      
+
   FermerGraphique();
   
   return EXIT_SUCCESS;

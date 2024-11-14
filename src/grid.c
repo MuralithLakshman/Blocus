@@ -78,11 +78,12 @@ Grid NewGrid(int originX, int originY, int side, int size, int screen) {
 
 /* Dessine une grille sur le graphique */ 
 void drawGrid(Grid g) {
-  int i;
+  int i, j;
   int x = g.originX;
   int y = g.originY;
   int side = g.side; 
   int box = side / g.size;
+  int sprite;
 
   ChoisirEcran(2);
   EffacerEcran(CouleurParNom("white"));
@@ -96,10 +97,26 @@ void drawGrid(Grid g) {
   for(i = x + box; i < x + side; i += box) {
     DessinerSegment(i, y, i, y + side); 
   }
+
+  
+  for(i = x; i < x + side; i += box) {
+    for(j = y; j < y + side; j += box) {
+      sprite = ChargerSprite("assets/orange-cross-6.png");
+
+      if(sprite == -1) {
+	printf("Erreur lors d'un chargement du sprite.\n");
+	FermerGraphique();
+	return;
+      }
+
+      AfficherSprite(sprite, i + 10, j + 10);
+      LibererSprite(sprite);
+    }
+  }
 }
 
 /* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
-/* Si le joueur n'est pas dans la grille, un tableau vide est renvoyé. */ 
+/* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
 int* getPlayerPosition(Player p, Grid g) {
   int i, j;
   int* coordinates = malloc(2 * sizeof(int));
