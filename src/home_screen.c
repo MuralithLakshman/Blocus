@@ -48,10 +48,21 @@ int main(void) {
   unsigned long next;
   int tailleGrille = 3; 
   char texte[20];
+  int sprite;
+  int sprite2;
 
   InitialiserGraphique();
   CreerFenetre(100, 100, 900, 600);
 
+  sprite = ChargerSprite("assets/fleche_droite.png");
+  if (sprite == -1) {
+  printf("Erreur de chargement de fleche_droite.png\n");
+}
+  sprite2 = ChargerSprite("assets/fleche_gauche.png");
+  if (sprite2 == -1) {
+  printf("Erreur de chargement de fleche_droite.png\n");
+}
+  
   b_montrer.x = 600; 
   b_montrer.y = 300; 
   b_montrer.width = 30;
@@ -70,8 +81,12 @@ int main(void) {
 
       EffacerEcran(CouleurParNom("white"));  
 
-      dessinerBouton(b_montrer, "blue");
-      dessinerBouton(b_descendre, "red");
+   /*  dessinerBouton(b_montrer, "blue");
+      dessinerBouton(b_descendre, "red"); */
+
+      AfficherSprite(sprite, b_montrer.x, b_montrer.y);
+      AfficherSprite(sprite2, b_descendre. x, b_descendre.y);
+      
 
       sprintf(texte, "Taille %dx%d", tailleGrille, tailleGrille);
       printText(50, 100, 2, "black", texte);
