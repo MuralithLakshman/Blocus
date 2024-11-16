@@ -7,6 +7,7 @@
 #include "grid.h"
 #include "player.h"
 #include "game.h"
+#include "utils.h"
 
 /* Fréquence de rafraichissement en milisecondes */
 #define MICRO 1000000L
@@ -18,22 +19,6 @@
 /* Dimensions de l'écran */ 
 #define MAX_WIDTH 1920
 #define MAX_HEIGHT 1080
-
-struct button {
-  int x;
-  int y;
-  int width;
-  int height;
-};
-
-typedef struct button Button;
-
-unsigned int isPressed(Button b) {
-  if(SourisCliquee()) return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
-
-  return 0; 
-}
-  
 
 /* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
 unsigned int showScreen(int screen) {
@@ -47,8 +32,7 @@ unsigned int showScreen(int screen) {
 }
 
 int main(void) {
-  Grid grid;
-  Game game; 
+  Game game;
   unsigned long next;
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
@@ -69,10 +53,9 @@ int main(void) {
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  /* Initialisation d'une nouvelle grille */ 
-
   game = NewGame(2, NewGrid(gridX, gridY, side, 6, 2));
   drawGrid(game.grid);
+  showScreen(game.grid.screen);
 
   next = Microsecondes() + MICRO;
   
@@ -85,12 +68,11 @@ int main(void) {
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
 
-      if(game.started) {
+      /*if(game.started) {
 	player = getPlayerTurn(game);
 
 	
-	 
-      }
+      }*/
     }
   }
 
