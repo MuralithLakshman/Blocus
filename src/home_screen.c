@@ -56,12 +56,21 @@ int main(void) {
 
   sprite = ChargerSprite("assets/orange-cross-4.png");
   if (sprite == -1) {
+<<<<<<< HEAD
   printf("Erreur de chargement de fleche_droite.png\n");
 }
   sprite2 = ChargerSprite("assets/blue-cross-7.png");
   if (sprite2 == -1) {
   printf("Erreur de chargement de fleche_gauche.png\n");
 }
+=======
+    printf("Erreur de chargement de fleche_droite.png\n");
+  }
+  sprite2 = ChargerSprite("assets/blue-cross-7.png");
+  if (sprite2 == -1) {
+    printf("Erreur de chargement de fleche_gauche.png\n");
+  }
+>>>>>>> 5fcd51021b29aeb8e3df3b3d8ba0603c92dab72d
   
   b_montrer.x = 600; 
   b_montrer.y = 300; 
