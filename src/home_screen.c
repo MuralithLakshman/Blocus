@@ -54,14 +54,14 @@ int main(void) {
   InitialiserGraphique();
   CreerFenetre(100, 100, 900, 600);
 
-  sprite = ChargerSprite("assets/fleche_droite.png");
+  sprite = ChargerSprite("assets/orange-cross-4.png");
   if (sprite == -1) {
-  printf("Erreur de chargement de fleche_droite.png\n");
-}
-  sprite2 = ChargerSprite("assets/fleche_gauche.png");
+    printf("Erreur de chargement de fleche_droite.png\n");
+  }
+  sprite2 = ChargerSprite("assets/blue-cross-7.png");
   if (sprite2 == -1) {
-  printf("Erreur de chargement de fleche_droite.png\n");
-}
+    printf("Erreur de chargement de fleche_gauche.png\n");
+  }
   
   b_montrer.x = 600; 
   b_montrer.y = 300; 
