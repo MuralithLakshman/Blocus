@@ -48,29 +48,20 @@ int main(void) {
   unsigned long next;
   int tailleGrille = 3; 
   char texte[20];
-  int sprite;
-  int sprite2;
+  unsigned  int sprite;
+  unsigned  int sprite2;
 
   InitialiserGraphique();
   CreerFenetre(100, 100, 900, 600);
 
-  sprite = ChargerSprite("assets/orange-cross-4.png");
+  sprite = ChargerSprite("assets/right-arrow.png");
   if (sprite == -1) {
-<<<<<<< HEAD
-  printf("Erreur de chargement de fleche_droite.png\n");
-}
-  sprite2 = ChargerSprite("assets/blue-cross-7.png");
-  if (sprite2 == -1) {
-  printf("Erreur de chargement de fleche_gauche.png\n");
-}
-=======
     printf("Erreur de chargement de fleche_droite.png\n");
   }
-  sprite2 = ChargerSprite("assets/blue-cross-7.png");
+  sprite2 = ChargerSprite("assets/left-arrow.png");
   if (sprite2 == -1) {
     printf("Erreur de chargement de fleche_gauche.png\n");
   }
->>>>>>> 5fcd51021b29aeb8e3df3b3d8ba0603c92dab72d
   
   b_montrer.x = 600; 
   b_montrer.y = 300; 
