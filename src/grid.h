@@ -1,6 +1,8 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include "utils.h"
+
 struct grid {
   int originX;
   int originY;
@@ -8,7 +10,7 @@ struct grid {
   int size;
   int screen;
   int** data;
-  int*** boxes; 
+  Button** boxes; 
 };
 
 typedef struct grid Grid; 

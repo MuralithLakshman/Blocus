@@ -3,6 +3,7 @@
 #include <graph.h>
 
 #include "player.h"
+#include "utils.h"
 
 struct grid {
   int originX;
@@ -11,14 +12,14 @@ struct grid {
   int size;
   int screen;
   int** data;
-  int*** boxes; 
+  Button** boxes; 
 };
 
 typedef struct grid Grid; 
 
 /* Initialise une nouvelle grille vide */ 
 Grid NewGrid(int originX, int originY, int side, int size, int screen) {
-  int i, j;
+  int i;
   Grid g;
 
   /*
@@ -26,23 +27,12 @@ Grid NewGrid(int originX, int originY, int side, int size, int screen) {
     Signifie que toutes les cases sont vides.
   */
   int** data = (int**)calloc(size, sizeof(int*));
-
-  /*
-    [
-      [ [x, y], [x', y'] ... ],
-      [ [...], ...],
-      ...
-    ]
-   */ 
-  int*** boxes = (int***)malloc(size * sizeof(int**));
+  Button** boxes = (Button**)malloc(size * sizeof(Button*));
 
   for(i = 0; i < size; i++) {
     data[i] = (int*)calloc(size, sizeof(int));
-    boxes[i] = (int**)malloc(size * sizeof(int*));
+    boxes[i] = (Button*)malloc(size * sizeof(Button));
     
-    for(j = 0; j < size; j++) {
-      boxes[i][j] = (int*)malloc(2 * sizeof(int));
-    }
   }
 
   /*
@@ -62,10 +52,6 @@ Grid NewGrid(int originX, int originY, int side, int size, int screen) {
   g.boxes = boxes;
 
   for(i = 0; i < size; i++) {
-    for(j = 0; j < size; j++) {
-      free(boxes[i][j]);
-    }
-
     free(data[i]);
     free(boxes[i]);
   }
