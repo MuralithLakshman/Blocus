@@ -20,9 +20,9 @@ struct game {
 typedef struct game Game;
 
 /* Initialise une nouvelle partie */ 
-Game NewGame(int number_players, Grid grid);
+Game new_game(int number_players, Grid grid);
 
 /* Renvoie le joueur à qui c'est le tour */ 
-Player getPlayerTurn(Game game);
+Player get_player_turn(Game game);
 
 #endif /* GAME_H */ 

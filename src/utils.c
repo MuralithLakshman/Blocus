@@ -11,7 +11,7 @@ struct button {
 
 typedef struct button Button;
 
-unsigned int isPressed(Button b) {
+unsigned int is_pressed(Button b) {
   if(SourisCliquee()) return _X >= b.x && _X <= b.x + b.width && _Y >= b.y && _Y <= b.y + b.height;
 
   return 0; 

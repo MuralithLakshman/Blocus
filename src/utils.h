@@ -14,6 +14,6 @@ struct button {
 
 typedef struct button Button;
 
-unsigned int isPressed(Button b);
+unsigned int is_pressed(Button b);
 
 #endif /* UTILS_H */

@@ -15,8 +15,8 @@ struct grid {
 
 typedef struct grid Grid; 
 
-Grid NewGrid(int originX, int originY, int side, int size, int screen);
+Grid new_grid(int originX, int originY, int side, int size, int screen);
 
-void drawGrid(Grid g);
+void draw_grid(Grid g);
 
 #endif /* GRID_H */ 

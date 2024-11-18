@@ -21,7 +21,7 @@
 #define MAX_HEIGHT 1080
 
 /* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
-unsigned int showScreen(int screen) {
+unsigned int show_screen(int screen) {
   if(screen <= 0 || screen > 10) return 0;
   
   ChoisirEcran(0);
@@ -53,9 +53,9 @@ int main(void) {
   /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  game = NewGame(2, NewGrid(gridX, gridY, side, 6, 2));
-  drawGrid(game.grid);
-  showScreen(game.grid.screen);
+  game = new_game(2, new_grid(gridX, gridY, side, 6, 2));
+  draw_grid(game.grid);
+  show_screen(game.grid.screen);
 
   next = Microsecondes() + MICRO;
   
@@ -69,7 +69,7 @@ int main(void) {
       next = Microsecondes() + MICRO;
 
       /*if(game.started) {
-	player = getPlayerTurn(game);
+	player = get_player_turn(game);
 
 	
       }*/

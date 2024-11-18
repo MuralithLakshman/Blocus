@@ -20,6 +20,6 @@ typedef int move;
 
 typedef struct player Player;
 
-unsigned int movePlayer(Player p, move m); 
+unsigned int move_player(Player p, move m); 
 
 #endif /* PLAYER_H */ 

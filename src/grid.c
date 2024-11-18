@@ -18,7 +18,7 @@ struct grid {
 typedef struct grid Grid; 
 
 /* Initialise une nouvelle grille vide */ 
-Grid NewGrid(int originX, int originY, int side, int size, int screen) {
+Grid new_grid(int originX, int originY, int side, int size, int screen) {
   int i;
   Grid g;
 
@@ -63,7 +63,7 @@ Grid NewGrid(int originX, int originY, int side, int size, int screen) {
 }
 
 /* Dessine une grille sur le graphique */ 
-void drawGrid(Grid g) {
+void draw_grid(Grid g) {
   int i, j;
   int x = g.originX;
   int y = g.originY;
@@ -103,7 +103,7 @@ void drawGrid(Grid g) {
 
 /* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
 /* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
-int* getPlayerPosition(Player p, Grid g) {
+int* get_player_position(Player p, Grid g) {
   int i, j;
   int* coordinates = malloc(2 * sizeof(int));
 

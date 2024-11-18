@@ -29,7 +29,7 @@ typedef struct player Player;
    true, si la case est libre 
    -1, si le mouvement passé en argument n'est pas correct
 */
-unsigned int movePlayer(Player p, move m, Grid g) {
+unsigned int move_player(Player p, move m, Grid g) {
   
   switch(m) {
     case LEFT:
