@@ -17,12 +17,11 @@ typedef struct button {
   int height;
 } Button;
 
-typedef struct Home {
+typedef struct home {
   Button b_monter, b_descendre;
-  unsigned long next;
   int tailleGrille;
-  unsigned int spriteRight;
-  unsigned int spriteLeft;
+  int spriteRight;
+  int spriteLeft;
 } Home;
 
 unsigned int is_pressed(Button b, int x, int y) {
@@ -40,67 +39,63 @@ void dessiner_bouton(Button b, char* color) {
 }
 
 void init_game(Home* home) {
-  Home h;
   Button b;
-  h.tailleGrille = 3;
-  h.b_monter = b;
-  h.b_monter.x = 600;
-  h.b_monter.y = 300;
-  h.b_monter.width = 30;
-  h.b_monter.height = 30;
+  home->tailleGrille = 3;
+  home->b_monter = b;
+  home->b_monter.x = 600;
+  home->b_monter.y = 300;
+  home->b_monter.width = 30;
+  home->b_monter.height = 30;
 
-  h.b_descendre.x = 300;
-  h.b_descendre.y = 300;
-  h.b_descendre.width = 30;
-  h.b_descendre.height = 30;
-  h.next = Microsecondes() + MICRO;
+  home->b_descendre.x = 300;
+  home->b_descendre.y = 300;
+  home->b_descendre.width = 30;
+  home->b_descendre.height = 30;
 
-}
-
-int show_sprite(Home* home) {
- Home h;
- h.spriteRight = ChargerSprite("assets/right-arrow.png");
-  if (h.spriteRight == -1) {
+  home->spriteRight = ChargerSprite("assets/right-arrow.png");
+  if (home->spriteRight == -1) {
     printf("Erreur de chargement de fleche_droite.png\n");
   }
- h.spriteLeft = ChargerSprite("assets/left-arrow.png");
-  if (h.spriteLeft == -1) {
+ home->spriteLeft = ChargerSprite("assets/left-arrow.png");
+  if (home->spriteLeft == -1) {
     printf("Erreur de chargement de fleche_gauche.png\n");
   }
 }
 
 void update_screen(Home* home) {
-   Home h;
    char texte[20];
    
    EffacerEcran(CouleurParNom("white"));  
 
-  AfficherSprite(h.spriteRight,h.b_monter.x, h.b_monter.y);
-  AfficherSprite(h.spriteLeft, h.b_descendre.x, h.b_descendre.y);
+   AfficherSprite(home->spriteRight, home->b_monter.x, home->b_monter.y);
+   AfficherSprite(home->spriteLeft, home->b_descendre.x, home->b_descendre.y);
 
-  sprintf(texte, "Taille %dx%d", h.tailleGrille, h.tailleGrille);
-  print_text(50, 100, 2, "black", texte);
-
+   sprintf(texte, "Taille %dx%d", home->tailleGrille, home->tailleGrille);
+   print_text(50, 100, 2, "black", texte);
 }
 
-void mouse_click(Home* home) {
-    Home h;
+int mouse_click(Home* home) {
     
-  if (SourisCliquee()) {
-        int x = _X, y = _Y; 
-
-        if (is_pressed(h.b_monter, x, y)) {
-          if (h.tailleGrille < 9) {
-            h.tailleGrille++; 
-          }
-        }
-
-        if (is_pressed(h.b_descendre, x, y)) {
-          if (h.tailleGrille > 3) {
-            h.tailleGrille--;  
-          }
-        }
+  if(SourisCliquee()) {
+    int x = _X, y = _Y;
+    
+    if(is_pressed(home->b_monter, x, y)) {
+      if(home->tailleGrille < 9) {
+        home->tailleGrille++;
+	return 1;
       }
+    }
+
+    if(is_pressed(home->b_descendre, x, y)) {
+      if(home->tailleGrille > 3) {
+	home->tailleGrille--;
+	return 1;
+      }
+    }
+    
+  }
+
+  return 0;
 }
   
 
@@ -112,9 +107,10 @@ unsigned int show_screen(int screen) {
   CopierZone(screen, 0, 0, 0, WIDTH, HEIGHT, 0, 0);
 
   return screen;
-}
+} 
 
 int main(void) {
+  unsigned long next; 
   Home h;
 
   InitialiserGraphique();
@@ -122,21 +118,22 @@ int main(void) {
 
   init_game(&h);
 
-  show_sprite(&h);
- 
-
+  next = Microsecondes() + MICRO;
+  update_screen(&h);
   while (1) {
-    if (Microsecondes() > h.next) {
-     h.next = Microsecondes() + MICRO;
-    }
+    if (Microsecondes() > next) {
+      printf("p");
+      next = Microsecondes() + MICRO;
 
-    update_screen(&h);
-    mouse_click(&h);
+      if(mouse_click(&h)) {
+	update_screen(&h); 
+      }
+    }
 
     if (ToucheEnAttente() == 1) {
       if (Touche() == XK_Escape) break;
     }
-  }
+    }
 
   FermerGraphique();
   return 0;
