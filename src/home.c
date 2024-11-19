@@ -18,7 +18,7 @@ typedef struct button {
 } Button;
 
 typedef struct home {
-  Button b_monter, b_descendre;
+  Button b_monter, b_descendre, b_select;
   int tailleGrille;
   int spriteRight;
   int spriteLeft;
@@ -34,6 +34,7 @@ void print_text(int x, int y, int size, char* color, char* text) {
 }
 
 void dessiner_bouton(Button b, char* color) {
+    
   ChoisirCouleurDessin(CouleurParNom(color));
   DessinerRectangle(b.x, b.y, b.width, b.height);
 }
@@ -52,6 +53,11 @@ void init_game(Home* home) {
   home->b_descendre.width = 30;
   home->b_descendre.height = 30;
 
+  home->b_select.x =400;
+  home->b_select.y = 500;
+  home->b_select.width = 100;
+  home->b_select.height = 50;
+  
   home->spriteRight = ChargerSprite("assets/right-arrow.png");
   if (home->spriteRight == -1) {
     printf("Erreur de chargement de fleche_droite.png\n");
@@ -70,6 +76,8 @@ void update_screen(Home* home) {
    AfficherSprite(home->spriteRight, home->b_monter.x, home->b_monter.y);
    AfficherSprite(home->spriteLeft, home->b_descendre.x, home->b_descendre.y);
 
+   dessiner_bouton(home->b_select,"blue");
+   print_text(home->b_select.x + 10, home->b_select.y + 25, 1, "black", "Select");
    sprintf(texte, "Taille %dx%d", home->tailleGrille, home->tailleGrille);
    print_text(50, 100, 2, "black", texte);
 }
@@ -93,6 +101,9 @@ int mouse_click(Home* home) {
       }
     }
     
+    if(is_pressed(home->b_select,x,y)){
+     EffacerEcran(CouleurParNom("white"));
+    }
   }
 
   return 0;
