@@ -22,6 +22,7 @@ typedef struct home {
   int tailleGrille;
   int spriteRight;
   int spriteLeft;
+  int spriteSelect;
 } Home;
 
 unsigned int is_pressed(Button b, int x, int y) {
@@ -55,8 +56,8 @@ void init_game(Home* home) {
 
   home->b_select.x =400;
   home->b_select.y = 500;
-  home->b_select.width = 100;
-  home->b_select.height = 50;
+  home->b_select.width = 280;
+  home->b_select.height = 60;
   
   home->spriteRight = ChargerSprite("assets/right-arrow.png");
   if (home->spriteRight == -1) {
@@ -66,7 +67,15 @@ void init_game(Home* home) {
   if (home->spriteLeft == -1) {
     printf("Erreur de chargement de fleche_gauche.png\n");
   }
+
+ home->spriteSelect = ChargerSprite("assets/Select.png");
+  if (home->spriteSelect == -1) {
+    printf("Erreur de chargement de fleche_gauche.png\n");
+  }
 }
+
+
+
 
 void update_screen(Home* home) {
    char texte[20];
@@ -75,9 +84,8 @@ void update_screen(Home* home) {
 
    AfficherSprite(home->spriteRight, home->b_monter.x, home->b_monter.y);
    AfficherSprite(home->spriteLeft, home->b_descendre.x, home->b_descendre.y);
-
-   dessiner_bouton(home->b_select,"blue");
-   print_text(home->b_select.x + 10, home->b_select.y + 25, 1, "black", "Select");
+   AfficherSprite(home->spriteSelect, home->b_select.x, home->b_select.y);
+ 
    sprintf(texte, "Taille %dx%d", home->tailleGrille, home->tailleGrille);
    print_text(50, 100, 2, "black", texte);
 }
