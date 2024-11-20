@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-struct grid {
+typedef struct grid {
   int originX;
   int originY;
   int side;
@@ -11,12 +11,10 @@ struct grid {
   int screen;
   int** data;
   Button** boxes; 
-};
+} Grid;
 
-typedef struct grid Grid; 
+Grid new_grid(int originX, int originY, int side, int size, int screen);
 
-Grid NewGrid(int originX, int originY, int side, int size, int screen);
-
-void drawGrid(Grid g);
+void draw_grid(Grid g);
 
 #endif /* GRID_H */ 

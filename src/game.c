@@ -2,24 +2,27 @@
 #include <stdio.h>
 
 #include "graph.h"
-#include "player.h"
 #include "grid.h"
 
 #define ONE_PLAYER 1
-#define TWO_PLAYERS 2 
+#define TWO_PLAYERS 2
 
-struct game {
+typedef struct player {
+  int id;
+  unsigned short int bot;
+  int next_move[2];
+} Player;
+
+typedef struct game {
   unsigned int started; /* Partie débutée (booleen) */ 
   unsigned int ended; /* Partie terminée (booleen) */ 
   Grid grid;
   Player player1;
   Player player2;
   int turn; /* ID du joueur à qui c'est le tour */ 
-};
+} Game; 
 
-typedef struct game Game;
-
-Game NewGame(int number_players, Grid grid) {
+Game new_game(int number_players, Grid grid) {
   Game game;
   Player player1, player2;
 
@@ -39,7 +42,7 @@ Game NewGame(int number_players, Grid grid) {
   return game; 
 }
 
-Player getPlayerTurn(Game game) {
+Player get_player_turn(Game game) {
   return game.turn == game.player1.id ? game.player1 : game.player2;
 }
 
