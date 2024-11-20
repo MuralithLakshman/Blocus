@@ -42,6 +42,10 @@ Game new_game(int number_players, Grid grid) {
   return game; 
 }
 
+void start_game(Game* game) {
+  game->started = 1;
+}
+
 Player get_player_turn(Game game) {
   return game.turn == game.player1.id ? game.player1 : game.player2;
 }

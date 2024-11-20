@@ -26,6 +26,8 @@ typedef struct game {
 /* Initialise une nouvelle partie */ 
 Game new_game(int number_players, Grid grid);
 
+void start_game(Game* game);
+
 /* Renvoie le joueur à qui c'est le tour */ 
 Player get_player_turn(Game game);
 

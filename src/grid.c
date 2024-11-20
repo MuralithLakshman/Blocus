@@ -5,6 +5,9 @@
 #include "grid.h"
 #include "utils.h"
 
+#define PLAYER_1 1
+#define PLAYER_2 2
+
 /* Initialise une nouvelle grille vide */ 
 Grid new_grid(int originX, int originY, int side, int size, int screen) {
   int i, j;
@@ -67,7 +70,7 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
   return g;		        
 }
 
-/* Dessine une grille sur le graphique */ 
+/* Dessine une grille vide sur le graphique */ 
 void draw_grid(Grid g) {
   int i, j;
   int x = g.originX;
@@ -106,32 +109,22 @@ void draw_grid(Grid g) {
   }
 }
 
-<<<<<<< HEAD
-=======
-/* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
-/* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
-int* get_player_position(Player p, Grid g) {
+int* boxClicked(Grid grid) {
   int i, j;
-  int* coordinates = malloc(2 * sizeof(int));
+  int* index == NULL;
 
-  if(coordinates == NULL) return NULL;
-
-  for(i = 0; i < g.side; i++) {
-    for(j = 0; j < g.side; j++) {
-      if(g.data[i][j] == p.id) {
-	coordinates[0] = i;
-	coordinates[1] = j;
-
-	return coordinates;
+  for(i = 0; i < side; i++) {
+    for(j = 0; j < side; j++) {
+      if(isPressed(grid.boxes[i][j])) {
+	coos = (int*) malloc(2 * sizeof(int));
+	index[0] = i;
+	index[1] = j;
+	break;
       }
     }
   }
 
-  free(coordinates);
-
-  return NULL; 
+  return coos;
 }
-
->>>>>>> c85eca3b53c0fd45415ce5729f3a828678273f8a
 
 

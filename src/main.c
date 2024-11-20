@@ -20,8 +20,8 @@
 #define MAX_HEIGHT 1080
 
 int main(void) {
-  Game game;
   unsigned long next;
+  Game game; 
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
   int screenX = (MAX_WIDTH - WIDTH) / 2;
@@ -44,6 +44,8 @@ int main(void) {
   game = new_game(2, new_grid(gridX, gridY, side, 6, 2));
   draw_grid(game.grid);
   show_screen(game.grid.screen, WIDTH, HEIGHT);
+  start_game(&game);
+  printf("%d, %d\n", game.started, game.ended); 
 
   next = Microsecondes() + MICRO;
   
@@ -55,6 +57,13 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
+
+      if(!game.started) {
+	/* Code pour l'écran d'acceuil */ 
+      } else if(game.started) {
+      } else if(game.ended) {
+	/* Code pour l'écran de fin */ 
+      }
     }
   }
 
