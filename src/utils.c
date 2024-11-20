@@ -12,6 +12,7 @@ typedef struct button {
 Button new_button(int x, int y, int width, int height) {
   Button button;
 
+<<<<<<< HEAD
   button.x = x;
   button.y = y;
   button.width = width;

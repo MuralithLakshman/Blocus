@@ -8,7 +8,8 @@
 /* Initialise une nouvelle grille vide */ 
 Grid new_grid(int originX, int originY, int side, int size, int screen) {
   int i, j;
-  int x, y; 
+  int x, y;
+  
   Grid g;
   Button b;
 
@@ -105,5 +106,32 @@ void draw_grid(Grid g) {
   }
 }
 
+<<<<<<< HEAD
+=======
+/* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
+/* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
+int* get_player_position(Player p, Grid g) {
+  int i, j;
+  int* coordinates = malloc(2 * sizeof(int));
+
+  if(coordinates == NULL) return NULL;
+
+  for(i = 0; i < g.side; i++) {
+    for(j = 0; j < g.side; j++) {
+      if(g.data[i][j] == p.id) {
+	coordinates[0] = i;
+	coordinates[1] = j;
+
+	return coordinates;
+      }
+    }
+  }
+
+  free(coordinates);
+
+  return NULL; 
+}
+
+>>>>>>> c85eca3b53c0fd45415ce5729f3a828678273f8a
 
 
