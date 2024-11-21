@@ -64,9 +64,6 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
     free(boxes[i]);
   }
 
-  free(data);
-  free(boxes);
-
   return g;		        
 }
 
@@ -109,22 +106,26 @@ void draw_grid(Grid g) {
   }
 }
 
-int* boxClicked(Grid grid) {
+int* get_box_clicked(Grid grid) {
   int i, j;
-  int* index == NULL;
+  int* index = NULL;
 
-  for(i = 0; i < side; i++) {
-    for(j = 0; j < side; j++) {
-      if(isPressed(grid.boxes[i][j])) {
-	coos = (int*) malloc(2 * sizeof(int));
+  for(i = 0; i < grid.side; i++) {
+    for(j = 0; j < grid.side; j++) {
+
+      /*printf("%d\n", grid.boxes[i][j].height);*/
+      /*
+      if(is_pressed_button(grid.boxes[i][j])) {
+	index = (int*) malloc(2 * sizeof(int));
 	index[0] = i;
 	index[1] = j;
 	break;
       }
+      */
     }
   }
 
-  return coos;
+  return index;
 }
 
 

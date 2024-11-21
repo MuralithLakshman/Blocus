@@ -21,7 +21,8 @@
 
 int main(void) {
   unsigned long next;
-  Game game; 
+  Game game;
+  int* box;
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
   int screenX = (MAX_WIDTH - WIDTH) / 2;
@@ -31,8 +32,8 @@ int main(void) {
   int gridY = (HEIGHT - side) / 2;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
-  if(WIDTH <= (side + 100) || HEIGHT <= (side + 100)) {
-    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.\n");
+  if(WIDTH < (side + 100) || HEIGHT < (side + 100)) {
+    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être supérieur ou égal à 600.\n");
     return EXIT_FAILURE;
   }
   
@@ -45,7 +46,6 @@ int main(void) {
   draw_grid(game.grid);
   show_screen(game.grid.screen, WIDTH, HEIGHT);
   start_game(&game);
-  printf("%d, %d\n", game.started, game.ended); 
 
   next = Microsecondes() + MICRO;
   
@@ -57,7 +57,14 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
-
+      
+      box = get_box_clicked(game.grid);
+      /*
+      if(box != NULL) {
+	printf("%d, %d", box[0], box[1]);
+      }
+      */
+	
       if(!game.started) {
 	/* Code pour l'écran d'acceuil */ 
       } else if(game.started) {

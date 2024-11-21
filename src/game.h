@@ -21,6 +21,7 @@ typedef struct game {
   Player player1;
   Player player2;
   int turn; /* ID du joueur à qui c'est le tour */
+  int turn_type;
 } Game;
 
 /* Initialise une nouvelle partie */ 
