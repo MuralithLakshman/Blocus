@@ -2,25 +2,19 @@
 #include <stdio.h>
 #include <graph.h>
 
-#include "player.h"
+#include "grid.h"
 #include "utils.h"
 
-struct grid {
-  int originX;
-  int originY;
-  int side;
-  int size;
-  int screen;
-  int** data;
-  Button** boxes; 
-};
-
-typedef struct grid Grid; 
+#define PLAYER_1 1
+#define PLAYER_2 2
 
 /* Initialise une nouvelle grille vide */ 
 Grid new_grid(int originX, int originY, int side, int size, int screen) {
-  int i;
+  int i, j;
+  int x, y;
+  
   Grid g;
+  Button b;
 
   /*
     Utilisation de la fonction calloc() pour que tous les bits soient à 0.
@@ -43,6 +37,20 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
     side++;
   }
 
+  x = originX;
+  y = originY;
+  b = new_button(x, y, side / size, side / size);
+
+  for(i = 0; i < size; i++) {
+    for(j = 0; j < size; j++) {
+      boxes[i][j] = b;
+      
+      x += side / size; 
+    }
+
+    y += side / size; 
+  }
+
   g.originX = originX;
   g.originY = originY;
   g.side = side;
@@ -56,13 +64,10 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
     free(boxes[i]);
   }
 
-  free(data);
-  free(boxes);
-
   return g;		        
 }
 
-/* Dessine une grille sur le graphique */ 
+/* Dessine une grille vide sur le graphique */ 
 void draw_grid(Grid g) {
   int i, j;
   int x = g.originX;
@@ -101,29 +106,26 @@ void draw_grid(Grid g) {
   }
 }
 
-/* Renvoie la position d'un joueur dans la grille sous la forme d'un tableau [x, y] */
-/* Si le joueur n'est pas dans la grille, NULL est renvoyé. */ 
-int* get_player_position(Player p, Grid g) {
+int* get_box_clicked(Grid grid) {
   int i, j;
-  int* coordinates = malloc(2 * sizeof(int));
+  int* index = NULL;
 
-  if(coordinates == NULL) return NULL;
+  for(i = 0; i < grid.side; i++) {
+    for(j = 0; j < grid.side; j++) {
 
-  for(i = 0; i < g.side; i++) {
-    for(j = 0; j < g.side; j++) {
-      if(g.data[i][j] == p.id) {
-	coordinates[0] = i;
-	coordinates[1] = j;
-
-	return coordinates;
+      /*printf("%d\n", grid.boxes[i][j].height);*/
+      /*
+      if(is_pressed_button(grid.boxes[i][j])) {
+	index = (int*) malloc(2 * sizeof(int));
+	index[0] = i;
+	index[1] = j;
+	break;
       }
+      */
     }
   }
 
-  free(coordinates);
-
-  return NULL; 
+  return index;
 }
-
 
 

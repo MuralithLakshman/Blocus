@@ -5,7 +5,6 @@
 #include "/usr/include/X11/keysymdef.h"
 
 #include "grid.h"
-#include "player.h"
 #include "game.h"
 #include "utils.h"
 
@@ -20,20 +19,10 @@
 #define MAX_WIDTH 1920
 #define MAX_HEIGHT 1080
 
-/* Renvoie l'écran affiché ou 0 si un problème est intervenu pendant l'exécution du programme */ 
-unsigned int show_screen(int screen) {
-  if(screen <= 0 || screen > 10) return 0;
-  
-  ChoisirEcran(0);
-  EffacerEcran(CouleurParNom("white"));
-  CopierZone(screen, 0, 0, 0, WIDTH, HEIGHT, 0, 0);
-
-  return screen;
-}
-
 int main(void) {
-  Game game;
   unsigned long next;
+  Game game;
+  int* box;
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
   int screenX = (MAX_WIDTH - WIDTH) / 2;
@@ -43,19 +32,20 @@ int main(void) {
   int gridY = (HEIGHT - side) / 2;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
-  if(WIDTH <= (side + 100) || HEIGHT <= (side + 100)) {
-    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être strictement supérieur à 600.\n");
+  if(WIDTH < (side + 100) || HEIGHT < (side + 100)) {
+    printf("Taille de la fenêtre trop petite. La largeur et la hauteur de la fenêtre doivent être supérieur ou égal à 600.\n");
     return EXIT_FAILURE;
   }
   
   InitialiserGraphique();
   
-  /* Créer un fenêtre toujours à peu près au milieu de l'écran */ 
+  /* Créer une fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
   game = new_game(2, new_grid(gridX, gridY, side, 6, 2));
   draw_grid(game.grid);
-  show_screen(game.grid.screen);
+  show_screen(game.grid.screen, WIDTH, HEIGHT);
+  start_game(&game);
 
   next = Microsecondes() + MICRO;
   
@@ -67,12 +57,20 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
-
-      /*if(game.started) {
-	player = get_player_turn(game);
-
+      
+      box = get_box_clicked(game.grid);
+      /*
+      if(box != NULL) {
+	printf("%d, %d", box[0], box[1]);
+      }
+      */
 	
-      }*/
+      if(!game.started) {
+	/* Code pour l'écran d'acceuil */ 
+      } else if(game.started) {
+      } else if(game.ended) {
+	/* Code pour l'écran de fin */ 
+      }
     }
   }
 

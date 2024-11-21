@@ -5,15 +5,17 @@
 #include <stdio.h>
 #include <graph.h>
 
-struct button {
+typedef struct button {
   int x;
   int y;
   int width;
   int height;
-};
+} Button;
 
-typedef struct button Button;
+Button new_button(int x, int y, int width, int height);
 
-unsigned int is_pressed(Button b);
+unsigned int is_pressed_button(Button b);
+
+int show_screen(int screen, int width, int height); 
 
 #endif /* UTILS_H */

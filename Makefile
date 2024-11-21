@@ -3,7 +3,7 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -g
 SRC = src/
-OFILES = $(SRC)main.o $(SRC)player.o $(SRC)grid.o $(SRC)game.o $(SRC)utils.o
+OFILES = $(SRC)main.o $(SRC)grid.o $(SRC)game.o $(SRC)utils.o
 LIBS = -lgraph -lm
 EXE = exe
 
@@ -16,13 +16,13 @@ goal : ${EXE}
 ${EXE} : $(OFILES)
 	$(CC) $(CFLAGS) -o $(EXE) $(OFILES) $(LIBS)
 
-main.o : main.c grid.h player.h game.h utils.h
+main.o : main.c grid.h game.h utils.h
 	$(CC) $(CFLAGS) -c $(SRC)main.c $(LIBS) 
 
 grid.o : grid.c grid.h
 	$(CC) $(CFLAGS) -c $(SRC)grid.c $(LIBS) 
 
-player.o : player.c player.h
+player.o : player.c
 	$(CC) $(CFLAGS) -c $(SRC)player.c $(LIBS)
 
 game.o : game.c game.h
