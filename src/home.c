@@ -27,6 +27,7 @@ typedef struct home {
   int sprite2player;
   int sprite1playergreen;
   int sprite2playergreen;
+  int player_clicked;
 } Home;
 
 unsigned int is_pressed_button(Button b, int x, int y) {
@@ -39,7 +40,6 @@ void print_text(int x, int y, int size, char* color, char* text) {
 }
 
 void dessiner_bouton(Button b, char* color) {
-    
   ChoisirCouleurDessin(CouleurParNom(color));
   DessinerRectangle(b.x, b.y, b.width, b.height);
 }
@@ -58,7 +58,7 @@ void init_game(Home* home) {
   home->b_descendre.width = 30;
   home->b_descendre.height = 30;
 
-  home->b_select.x =400;
+  home->b_select.x = 400;
   home->b_select.y = 500;
   home->b_select.width = 280;
   home->b_select.height = 60;
@@ -73,18 +73,17 @@ void init_game(Home* home) {
   home->b_2player.y = 450;
   home->b_2player.width = 280;
   home->b_2player.height = 60;
-  
-  
+
   home->spriteRight = ChargerSprite("assets/right-arrow.png");
   if (home->spriteRight == -1) {
     printf("Erreur de chargement de fleche_droite.png\n");
   }
- home->spriteLeft = ChargerSprite("assets/left-arrow.png");
+  home->spriteLeft = ChargerSprite("assets/left-arrow.png");
   if (home->spriteLeft == -1) {
     printf("Erreur de chargement de fleche_gauche.png\n");
   }
 
- home->spriteSelect = ChargerSprite("assets/Select.png");
+  home->spriteSelect = ChargerSprite("assets/Select.png");
   if (home->spriteSelect == -1) {
     printf("Erreur de chargement de Select.png\n");
   }
@@ -102,89 +101,84 @@ void init_game(Home* home) {
   }
   home->sprite2playergreen = ChargerSprite("assets/2-Players-green.png");
   if (home->sprite2playergreen == -1) {
-    printf("Erreur de chargement de 2-Player-green.png\n");
+    printf("Erreur de chargement de 2-Players-green.png\n");
   }
+
+  home->player_clicked = 0;
 }
 
-
 void show_player(Home* home) {
-  
   AfficherSprite(home->sprite1player, home->b_1player.x, home->b_1player.y);
   AfficherSprite(home->sprite2player, home->b_2player.x, home->b_2player.y);
 }
 
 void update_screen(Home* home) {
-   char texte[20];
-   
-   EffacerEcran(CouleurParNom("white"));  
+  char texte[20];
 
-   AfficherSprite(home->spriteRight, home->b_monter.x, home->b_monter.y);
-   AfficherSprite(home->spriteLeft, home->b_descendre.x, home->b_descendre.y);
-   AfficherSprite(home->spriteSelect, home->b_select.x, home->b_select.y);
-   
+  EffacerEcran(CouleurParNom("white"));
+
+  AfficherSprite(home->spriteRight, home->b_monter.x, home->b_monter.y);
+  AfficherSprite(home->spriteLeft, home->b_descendre.x, home->b_descendre.y);
+  AfficherSprite(home->spriteSelect, home->b_select.x, home->b_select.y);
+
   AfficherSprite(home->sprite1player, home->b_1player.x, home->b_1player.y);
   AfficherSprite(home->sprite2player, home->b_2player.x, home->b_2player.y);
- 
-   sprintf(texte, "Taille %dx%d", home->tailleGrille, home->tailleGrille);
-   print_text(50, 100, 2, "black", texte);
+
+  sprintf(texte, "Taille %dx%d", home->tailleGrille, home->tailleGrille);
+  print_text(50, 100, 2, "black", texte);
 }
 
-
-
 int mouse_click(Home* home) {
-    
-  if(SourisCliquee()) {
+  if (SourisCliquee()) {
     int x = _X, y = _Y;
-    
-    if(is_pressed_button(home->b_monter, x, y)) {
-      if(home->tailleGrille < 9) {
+
+    if (is_pressed_button(home->b_monter, x, y)) {
+      if (home->tailleGrille < 9) {
         home->tailleGrille++;
         return 1;
       }
     }
 
-    if(is_pressed_button(home->b_descendre, x, y)) {
-      if(home->tailleGrille > 3) {
+    if (is_pressed_button(home->b_descendre, x, y)) {
+      if (home->tailleGrille > 3) {
         home->tailleGrille--;
         return 1;
       }
     }
-    
-    if(is_pressed_button(home->b_select, x, y)) {
+
+    if (is_pressed_button(home->b_select, x, y) && home->player_clicked != 0) {
       EffacerEcran(CouleurParNom("white"));
     }
 
-    if(is_pressed_button(home->b_1player, x, y)) {
+    if (is_pressed_button(home->b_1player, x, y)) {
       init_game(home);
-      /* EffacerEcran(CouleurParNom("white")); */
       AfficherSprite(home->sprite1playergreen, home->b_1player.x, home->b_1player.y);
       AfficherSprite(home->sprite2player, home->b_2player.x, home->b_2player.y);
+      home->player_clicked = 1;
     }
 
     if (is_pressed_button(home->b_2player, x, y)) {
       AfficherSprite(home->sprite1player, home->b_1player.x, home->b_1player.y);
       AfficherSprite(home->sprite2playergreen, home->b_2player.x, home->b_2player.y);
-    } 
-   
+      home->player_clicked = 2;
+    }
   }
 
   return 0;
 }
 
-  
-
 unsigned int show_screen(int screen) {
-  if(screen <= 0 || screen > 10) return 0;
-  
+  if (screen <= 0 || screen > 10) return 0;
+
   ChoisirEcran(0);
   EffacerEcran(CouleurParNom("white"));
   CopierZone(screen, 0, 0, 0, WIDTH, HEIGHT, 0, 0);
 
   return screen;
-} 
+}
 
 int main(void) {
-  unsigned long next; 
+  unsigned long next;
   Home h;
 
   InitialiserGraphique();
@@ -194,20 +188,20 @@ int main(void) {
 
   next = Microsecondes() + MICRO;
   update_screen(&h);
+
   while (1) {
     if (Microsecondes() > next) {
-      /*  printf("p"); */
       next = Microsecondes() + MICRO;
 
-      if(mouse_click(&h)) {
-	update_screen(&h);
+      if (mouse_click(&h)) {
+        update_screen(&h);
       }
     }
 
     if (ToucheEnAttente() == 1) {
       if (Touche() == XK_Escape) break;
     }
-    }
+  }
 
   FermerGraphique();
   return 0;
