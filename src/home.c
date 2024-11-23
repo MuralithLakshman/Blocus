@@ -13,6 +13,7 @@
 #define MAX_HEIGHT 740
 
 typedef struct home {
+  int screen;
   Button up_button, down_button, select_button, one_player_button, two_players_button;
   int grid_size;
   int right_arrow_sprite;
