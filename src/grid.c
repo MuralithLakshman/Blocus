@@ -60,7 +60,6 @@ Grid new_grid(Sprites* sprites_manager, Windw window, int originX, int originY, 
 
   for(i = 0; i < size; i++) {
     for(j = 0; j < size; j++) {
-      /*printf("x = %d, y = %d\n", x, y);*/
       boxes[i][j] = new_button(x, y, side / size, side / size);
       
       x += side / size; 
@@ -68,12 +67,6 @@ Grid new_grid(Sprites* sprites_manager, Windw window, int originX, int originY, 
 
     y += side / size;
     x = originX;
-  }
-
-  for(i = 0; i < size; i++) {
-    for(j = 0; j < size; j++) {
-      /*printf("Button : x = %d, y = %d\n", boxes[i][j].x, boxes[i][j].y);*/
-    }
   }
 
   grid.originX = originX;
@@ -248,8 +241,6 @@ int has_won(int player_id, Grid grid) {
     Coordinates player_pos = get_player_coordinates(player_id, grid);
     player_i = player_pos.i;
     player_j = player_pos.j;
-
-    printf("i = %d, j = %d\n", player_pos.i, player_pos.j);
 
     for(i = player_i - 1; i <= player_i + 1; i++) {
         for(j = player_j - 1; j <= player_j + 1; j++) {

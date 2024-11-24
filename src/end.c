@@ -22,8 +22,11 @@ End* new_end(Windw window, Sprites* sprites_manager) {
 
   end->screen = 3;
 
-  end->quit_button = new_button(300, 300, 280, 60);
-  end->restart_button = new_button(600, 300, 280, 60);
+  end->window = window;
+  end->sprites_manager = sprites_manager;
+
+  end->quit_button = new_button((window.width / 2) - 280, (window.height / 2) - 60, 280, 60);
+  end->restart_button = new_button((window.width / 2) - 280, (window.height / 2) - 120, 280, 60);
 
   end->quit_sprite = load_sprite("assets/quit.png", sprites_manager);
   end->restart_sprite = load_sprite("assets/restart.png", sprites_manager);
@@ -37,6 +40,14 @@ void draw_end(End* end) {
 
   AfficherSprite(end->restart_sprite, end->restart_button.x, end->restart_button.y);
   AfficherSprite(end->quit_sprite, end->quit_button.x, end->quit_button.y);
+}
+
+void print_winner(End* end) {
+  char text[30];
+
+  ChoisirEcran(end->screen);
+  sprintf(text, "Winner : Player %d", end->winner_id);
+  print_text((end->window.width / 2) - (TailleChaineEcran(text, 2) / 2), 100, 2, "black", text);
 }
 
 int get_action(End* end) {

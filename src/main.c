@@ -116,11 +116,13 @@ int main(void) {
               end->winner_id = game->player1.id;
               game->ended = 1; 
               game->started = 0;
+              print_winner(end);
               show_screen(end->screen, WIDTH, HEIGHT);
             } else if(has_won(game->player2.id, game->grid)) {
               end->winner_id = game->player2.id;
               game->ended = 1;
               game->started = 0;
+              print_winner(end);
               show_screen(end->screen, WIDTH, HEIGHT);
             }
           }
@@ -137,7 +139,12 @@ int main(void) {
 
           break;
         } else if(action == RESTART_ACTION) {
+          home = new_home(window, sprites_manager);
+          end = new_end(window, sprites_manager);
 
+          draw_home(home);
+          draw_end(end);
+          show_screen(home->screen, WIDTH, HEIGHT);
         }
       }
     }
