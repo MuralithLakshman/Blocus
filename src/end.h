@@ -20,6 +20,8 @@ End* new_end(Windw window, Sprites* sprites_manager);
 
 void draw_end(End* end);
 
+void print_winner(End* end);
+
 int get_action(End* end);
 
 #endif /* END_H */ 

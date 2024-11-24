@@ -80,13 +80,10 @@ void update_home(Home* home) {
     AfficherSprite(home->left_arrow_sprite, home->down_button.x, home->down_button.y);
     AfficherSprite(home->select_sprite, home->select_button.x, home->select_button.y);
 
-    printf("players = %d\n", home->number_players);
     if(home->number_players == 1) {
-      /*LibererSprite(home->one_player_selected_sprite);*/
       AfficherSprite(home->one_player_selected_sprite, home->one_player_button.x, home->one_player_button.y);
       AfficherSprite(home->two_players_sprite, home->two_players_button.x, home->two_players_button.y);
     } else {
-      /*LibererSprite(home->two_players_selected_sprite);*/
       AfficherSprite(home->one_player_sprite, home->one_player_button.x, home->one_player_button.y);
       AfficherSprite(home->two_players_selected_sprite, home->two_players_button.x, home->two_players_button.y);
     }
