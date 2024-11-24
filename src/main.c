@@ -7,6 +7,7 @@
 #include "grid.h"
 #include "game.h"
 #include "utils.h"
+#include "home.h"
 
 /* Fréquence de rafraichissement en milisecondes */
 #define MICRO 1000000L
@@ -22,7 +23,8 @@
 int main(void) {
   unsigned long next;
   Game game;
-  int* box;
+  Home* home;
+  Sprites sprites_manager;
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
   int screenX = (MAX_WIDTH - WIDTH) / 2;
@@ -30,6 +32,8 @@ int main(void) {
   int side = 500;
   int gridX = (WIDTH - side) / 2;
   int gridY = (HEIGHT - side) / 2;
+
+  sprites_manager.count = 0;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
   if(WIDTH < (side + 100) || HEIGHT < (side + 100)) {
@@ -43,12 +47,16 @@ int main(void) {
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
   game = new_game(2, new_grid(gridX, gridY, side, 6, 2));
-  draw_grid(game.grid);
-  show_screen(game.grid.screen, WIDTH, HEIGHT);
-  start_game(&game);
+  home = new_home(&sprites_manager);
 
-  next = Microsecondes() + MICRO;
+  draw_home(home);
+  draw_grid(game.grid);
   
+  show_screen(home->screen, WIDTH, HEIGHT);
+  
+  ChoisirEcran(0);
+  
+  next = Microsecondes() + MICRO;
   while(1) {
     /* SI la touche escape est pressée, cela arrête le programme. */ 
     if(ToucheEnAttente() == 1) {
@@ -57,16 +65,12 @@ int main(void) {
     
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
-      
-      box = get_box_clicked(game.grid);
-      /*
-      if(box != NULL) {
-	printf("%d, %d", box[0], box[1]);
+
+      if(mouse_click_home(home)) {
+	update_home(home);
       }
-      */
-	
-      if(!game.started) {
-	/* Code pour l'écran d'acceuil */ 
+
+      if(game.started == 0) {
       } else if(game.started) {
       } else if(game.ended) {
 	/* Code pour l'écran de fin */ 

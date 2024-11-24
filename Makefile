@@ -3,7 +3,7 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -g
 SRC = src/
-OFILES = $(SRC)main.o $(SRC)grid.o $(SRC)game.o $(SRC)utils.o
+OFILES = $(SRC)main.o $(SRC)grid.o $(SRC)game.o $(SRC)utils.o $(SRC)home.o
 LIBS = -lgraph -lm
 EXE = exe
 
@@ -30,6 +30,9 @@ game.o : game.c game.h
 
 utils.o : utils.c utils.h
 	$(CC) $(CFLAGS) -c $(SRC)utils.c $(LIBS)
+
+home.o: home.c home.h utils.h
+	$(CC) $(CFLAGS) -c $(SRC)home.c $(LIBS)
 
 ### OPTIONAL RULES ###
 

@@ -2,11 +2,20 @@
 #include <stdio.h>
 #include <graph.h>
 
-#include "grid.h"
 #include "utils.h"
 
 #define PLAYER_1 1
 #define PLAYER_2 2
+
+typedef struct grid {
+  int originX;
+  int originY;
+  int side;
+  int size;
+  int screen;
+  int** data;
+  Button** boxes; 
+} Grid;
 
 /* Initialise une nouvelle grille vide */ 
 Grid new_grid(int originX, int originY, int side, int size, int screen) {
@@ -14,7 +23,6 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
   int x, y;
   
   Grid g;
-  Button b;
 
   /*
     Utilisation de la fonction calloc() pour que tous les bits soient à 0.
@@ -39,16 +47,23 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
 
   x = originX;
   y = originY;
-  b = new_button(x, y, side / size, side / size);
 
   for(i = 0; i < size; i++) {
     for(j = 0; j < size; j++) {
-      boxes[i][j] = b;
+      /*printf("x = %d, y = %d\n", x, y);*/
+      boxes[i][j] = new_button(x, y, side / size, side / size);
       
       x += side / size; 
     }
 
-    y += side / size; 
+    y += side / size;
+    x = originX;
+  }
+
+  for(i = 0; i < size; i++) {
+    for(j = 0; j < size; j++) {
+      /*printf("Button : x = %d, y = %d\n", boxes[i][j].x, boxes[i][j].y);*/
+    }
   }
 
   g.originX = originX;
@@ -58,11 +73,6 @@ Grid new_grid(int originX, int originY, int side, int size, int screen) {
   g.screen = screen;
   g.data = data;
   g.boxes = boxes;
-
-  for(i = 0; i < size; i++) {
-    free(data[i]);
-    free(boxes[i]);
-  }
 
   return g;		        
 }
@@ -89,10 +99,9 @@ void draw_grid(Grid g) {
     DessinerSegment(i, y, i, y + side); 
   }
 
-  
+  sprite = ChargerSprite("assets/orange-cross-6.png");
   for(i = x; i < x + side; i += box) {
     for(j = y; j < y + side; j += box) {
-      sprite = ChargerSprite("assets/orange-cross-6.png");
 
       if(sprite == -1) {
 	printf("Erreur lors d'un chargement du sprite.\n");
@@ -101,31 +110,43 @@ void draw_grid(Grid g) {
       }
 
       AfficherSprite(sprite, i + 10, j + 10);
-      LibererSprite(sprite);
     }
   }
 }
 
-int* get_box_clicked(Grid grid) {
+int* get_box_clicked(Grid grid, int x, int y) {
   int i, j;
   int* index = NULL;
 
-  for(i = 0; i < grid.side; i++) {
-    for(j = 0; j < grid.side; j++) {
-
-      /*printf("%d\n", grid.boxes[i][j].height);*/
-      /*
-      if(is_pressed_button(grid.boxes[i][j])) {
+  for(i = 0; i < grid.size; i++) {
+    /*if(index != NULL) break;*/
+    
+    for(j = 0; j < grid.size; j++) {
+      
+      /*printf("x = %d, y = %d\n", grid.boxes[i][j].x, grid.boxes[i][j].y);*/
+      /*printf("%d\n", is_pressed_button(grid.boxes[i][j]));*/
+      if(is_pressed_button(grid.boxes[i][j], x, y)) {
 	index = (int*) malloc(2 * sizeof(int));
 	index[0] = i;
 	index[1] = j;
-	break;
+	printf("gg");
       }
-      */
     }
   }
 
   return index;
+}
+
+void free_content(Grid* grid) {
+  int i;
+
+  for(i = 0; i < grid->size; i++) {
+    free(grid->data[i]);
+    free(grid->boxes[i]);
+  }
+
+  free(grid->data);
+  free(grid->boxes);
 }
 
 
