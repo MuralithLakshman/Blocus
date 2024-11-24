@@ -11,7 +11,7 @@
 #include "end.h"
 
 /* Fréquence de rafraichissement en milisecondes */
-#define MICRO 1000000L / 30
+#define MICRO 1000000L
 
 /* Taille de la fenêtre graphique */ 
 #define WIDTH 900 /* Largeur */ 
@@ -87,10 +87,13 @@ int main(void) {
         update_grid(game->grid);
 
         if(game->player_turn.bot) {
-          /*play_bot(game->player_turn.id, game->player1.id, game->grid);*/
-          break;
-        }
-        if(box_clicked(game->grid)) {
+          if(is_void_grid(game->grid)) {
+            place_bot(game->player_turn.id, game->grid);
+          } else {
+            play_bot(game->player_turn.id, game->grid);
+            next_turn(game);
+          }
+        } else if(box_clicked(game->grid)) {
           if(is_void_grid(game->grid)) {
             if(is_free_clicked_box(game->grid)) {
               move_player_to_clicked_box(game->player_turn.id, game->grid);
@@ -109,7 +112,6 @@ int main(void) {
               }
             }
 
-            printf("Won : %d, %d\n", has_won(game->player1.id, game->grid), has_won(game->player2.id, game->grid));
             if(has_won(game->player1.id, game->grid)) {
               end->winner_id = game->player1.id;
               game->ended = 1; 

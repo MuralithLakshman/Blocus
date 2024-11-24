@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <graph.h>
-#include <string.h>
+#include <time.h>
 
 #include "utils.h"
 
@@ -274,7 +274,58 @@ int has_won(int player_id, Grid grid) {
     return won;
 }
 
-void play_bot(int bot_id, int player_id, Grid grid) {}
+void place_bot(int bot_id, Grid grid) {
+    int rand_i, rand_j;
+
+    srand((unsigned int)time(NULL));
+
+    do {
+        rand_i = rand() % grid.size;
+        rand_j = rand() % grid.size;
+    } while (grid.data[rand_i][rand_j] == PLAYER_1);
+
+    grid.data[rand_i][rand_j] = bot_id;
+}
+
+void play_bot(int bot_id, Grid grid) {
+    Coordinates bot_pos;
+    int adjacents[8][2]; 
+    int adj_count;       
+    int i, j, random_index;
+    int rand_i, rand_j;
+
+    bot_pos = get_player_coordinates(bot_id, grid);
+    adj_count = 0;
+
+    for (i = bot_pos.i - 1; i <= bot_pos.i + 1; i++) {
+        for (j = bot_pos.j - 1; j <= bot_pos.j + 1; j++) {
+            if (i >= 0 && i < grid.size && j >= 0 && j < grid.size) { 
+                if (!(i == bot_pos.i && j == bot_pos.j) && grid.data[i][j] == 0) {
+                    adjacents[adj_count][0] = i;
+                    adjacents[adj_count][1] = j;
+                    adj_count++;
+                }
+            }
+        }
+    }
+
+    if (adj_count > 0) {
+        random_index = rand() % adj_count;
+        grid.data[bot_pos.i][bot_pos.j] = 0; 
+        grid.data[adjacents[random_index][0]][adjacents[random_index][1]] = bot_id;
+    }
+
+    do {
+        rand_i = rand() % grid.size;
+        rand_j = rand() % grid.size;
+    } while (grid.data[rand_i][rand_j] != 0);
+
+    if (bot_id == PLAYER_1) {
+        grid.data[rand_i][rand_j] = grid.blue_cross_sprite; 
+    } else {
+        grid.data[rand_i][rand_j] = grid.orange_cross_sprite; 
+    }
+}
 
 int is_void_grid(Grid grid) {
   int count = 0;

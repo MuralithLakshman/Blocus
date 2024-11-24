@@ -47,8 +47,10 @@ void block_clicked_box(int player_id, Grid grid);
 
 int has_won(int player_id, Grid grid);
 
+void place_bot(int bot_id, Grid grid);
+
 /* Fait jouer le bot */
-void play_bot(int bot_id, int player_id, Grid grid);
+void play_bot(int bot_id, Grid grid);
 
 /* Renvoie si la vide grille est vide ou presque pour détecter si c'est le premier placement des deux joueurs */
 int is_void_grid(Grid grid);
