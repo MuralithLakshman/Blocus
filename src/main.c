@@ -8,9 +8,10 @@
 #include "game.h"
 #include "utils.h"
 #include "home.h"
+#include "end.h"
 
 /* Fréquence de rafraichissement en milisecondes */
-#define MICRO 1000000L
+#define MICRO 1000000L / 30
 
 /* Taille de la fenêtre graphique */ 
 #define WIDTH 900 /* Largeur */ 
@@ -22,9 +23,11 @@
 
 int main(void) {
   unsigned long next;
-  Game game;
+  Windw window;
+  Game* game;
   Home* home;
-  Sprites sprites_manager;
+  End* end;
+  Sprites* sprites_manager = (Sprites*)malloc(sizeof(Sprites));
 
   /* NE PAS TOUCHER AUX VARIABLES QUI SUIVENT ! */ 
   int screenX = (MAX_WIDTH - WIDTH) / 2;
@@ -33,7 +36,12 @@ int main(void) {
   int gridX = (WIDTH - side) / 2;
   int gridY = (HEIGHT - side) / 2;
 
-  sprites_manager.count = 0;
+  int action;
+
+  window.width = WIDTH;
+  window.height = HEIGHT;
+
+  sprites_manager->count = 0;
 
   /* Test si la taille de la fenêtre renseignée est capable de prendre en charge l'affichage de la grille avec une marge pour divers affichages */
   if(WIDTH < (side + 100) || HEIGHT < (side + 100)) {
@@ -46,12 +54,11 @@ int main(void) {
   /* Créer une fenêtre toujours à peu près au milieu de l'écran */ 
   CreerFenetre(screenX, screenY, WIDTH, HEIGHT);
 
-  game = new_game(2, new_grid(gridX, gridY, side, 6, 2));
-  home = new_home(&sprites_manager);
+  home = new_home(window, sprites_manager);
+  end = new_end(window, sprites_manager);
 
   draw_home(home);
-  draw_grid(game.grid);
-  
+  draw_end(end);
   show_screen(home->screen, WIDTH, HEIGHT);
   
   ChoisirEcran(0);
@@ -66,14 +73,70 @@ int main(void) {
     if(Microsecondes() > next) {
       next = Microsecondes() + MICRO;
 
-      if(mouse_click_home(home)) {
-	update_home(home);
-      }
+      if(!home->end) {
+        if(mouse_click_home(home)) { 
+          update_home(home);
 
-      if(game.started == 0) {
-      } else if(game.started) {
-      } else if(game.ended) {
-	/* Code pour l'écran de fin */ 
+          if(home->end) {
+            game = new_game(sprites_manager, window, home->number_players, new_grid(sprites_manager, window, gridX, gridY, side, home->grid_size, 2));
+            start_game(game);
+            show_screen(game->grid.screen, WIDTH, HEIGHT);
+          }
+        }
+      } else if(game->started) {
+        update_grid(game->grid);
+
+        if(game->player_turn.bot) {
+          /*play_bot(game->player_turn.id, game->player1.id, game->grid);*/
+          break;
+        }
+        if(box_clicked(game->grid)) {
+          if(is_void_grid(game->grid)) {
+            if(is_free_clicked_box(game->grid)) {
+              move_player_to_clicked_box(game->player_turn.id, game->grid);
+              next_turn(game);
+            }
+          } else {
+            if(game->turn_type == PLACE_TYPE) {
+              if(is_free_clicked_box(game->grid) && is_clicked_box_is_next_to_player(game->player_turn.id, game->grid)) {
+                move_player_to_clicked_box(game->player_turn.id, game->grid);
+                game->turn_type = BLOCK_TYPE;
+              }
+            } else {
+              if(is_free_clicked_box(game->grid)) {
+                block_clicked_box(game->player_turn.id, game->grid);
+                next_turn(game);
+              }
+            }
+
+            printf("Won : %d, %d\n", has_won(game->player1.id, game->grid), has_won(game->player2.id, game->grid));
+            if(has_won(game->player1.id, game->grid)) {
+              end->winner_id = game->player1.id;
+              game->ended = 1; 
+              game->started = 0;
+              show_screen(end->screen, WIDTH, HEIGHT);
+            } else if(has_won(game->player2.id, game->grid)) {
+              end->winner_id = game->player2.id;
+              game->ended = 1;
+              game->started = 0;
+              show_screen(end->screen, WIDTH, HEIGHT);
+            }
+          }
+        }
+
+      } else if(game->ended) {
+        action = get_action(end);
+
+        if(action == QUIT_ACTION) {
+          stop_game(game);
+
+          free(home);
+          free(end);
+
+          break;
+        } else if(action == RESTART_ACTION) {
+
+        }
       }
     }
   }

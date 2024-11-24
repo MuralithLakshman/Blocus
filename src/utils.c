@@ -11,7 +11,16 @@ typedef struct button {
 
 typedef struct sprites {
   int count;
-} Sprites; 
+} Sprites;
+
+typedef struct window {
+  int width;
+  int height; 
+} Windw;
+
+typedef struct coordinates {
+  int i, j;
+} Coordinates; 
 
 Button new_button(int x, int y, int width, int height) {
   Button button;
@@ -43,7 +52,7 @@ int show_screen(int screen, int width, int height) {
 
 void close_graph_error(char* error) {
   printf("%s\n", error);
-  FermerGraphique();
+  /*FermerGraphique();*/
 }
 
 int load_sprite(char* src, Sprites* manager) {
