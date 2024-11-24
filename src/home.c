@@ -98,6 +98,7 @@ int mouse_click_home(Home* home) {
       if(home->grid_size < 9) {
         home->grid_size++;
       }
+      return 1;
     }
 
     if(is_pressed_button(home->down_button, x, y)) {
@@ -108,15 +109,18 @@ int mouse_click_home(Home* home) {
     }
 
     if(is_pressed_button(home->select_button, x, y)) {
-      home->end = 1; 
+      home->end = 1;
+      return 1;
     }
 
     if(is_pressed_button(home->one_player_button, x, y)) {
       home->number_players = 1;
+      return 1;
     }
 
     if (is_pressed_button(home->two_players_button, x, y)) {
       home->number_players = 2;
+      return 1;
     } 
   }
 
